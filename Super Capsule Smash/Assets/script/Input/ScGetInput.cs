@@ -17,4 +17,9 @@ public class ScGetInput : MonoBehaviour
     {
        movementScript.MoveLeftAndRIght(ctxt.ReadValue<Vector2>().x);
     }
+
+    public void GetSouthButon(InputAction.CallbackContext ctxt)
+    {
+
+    }
 }

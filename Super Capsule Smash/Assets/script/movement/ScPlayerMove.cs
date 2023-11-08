@@ -15,6 +15,7 @@ public class ScPlayerMove : MonoBehaviour
     [SerializeField] private LayerMask ground;
     [SerializeField] private float MaxXVelocity;
     [SerializeField] private float dragFactor;
+    [SerializeField] private Transform groundChecker;
 
     private void Start()
     {
@@ -50,7 +51,7 @@ public class ScPlayerMove : MonoBehaviour
 
     private void GroundCheck()
     {
-        RaycastHit2D belowMe = Physics2D.Raycast(myTransform.position,Vector2.down,1.1f);
+        RaycastHit2D belowMe = Physics2D.Raycast(groundChecker.position,Vector2.down,0.2f, ground);
 
         if (belowMe.collider != null)
         {
