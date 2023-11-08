@@ -1,0 +1,34 @@
+{
+    "name": "playerMove",
+    "maps": [
+        {
+            "name": "move",
+            "id": "63e25ddc-8a40-4ee5-a679-9d0fdd4475ed",
+            "actions": [
+                {
+                    "name": "left/right",
+                    "type": "Value",
+                    "id": "5ab3c871-8bd8-4522-af45-89a03c9210cc",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "d2ea680c-1370-4eec-b873-fe5b3956ce21",
+                    "path": "<Joystick>/stick/left",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "left/right",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
