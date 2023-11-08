@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9149717296838210792}
   - component: {fileID: 4233369405835699743}
+  - component: {fileID: 4266247888124958288}
   m_Layer: 0
   m_Name: Capsule
   m_TagString: Untagged
@@ -26,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 1664790309595215110}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.55, y: 1, z: 0.85}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5434756194976693058}
@@ -39,7 +40,7 @@ SpriteRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1664790309595215110}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
@@ -84,6 +85,22 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!70 &4266247888124958288
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1664790309595215110}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_Size: {x: 1, y: 2}
+  m_Direction: 0
 --- !u!1 &5418208704642040745
 GameObject:
   m_ObjectHideFlags: 0
@@ -94,6 +111,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1354569838639337589}
   - component: {fileID: 2755663253272533317}
+  - component: {fileID: 7442655931726784911}
   m_Layer: 0
   m_Name: Circle
   m_TagString: Untagged
@@ -111,7 +129,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.75, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
-  m_ConstrainProportionsScale: 1
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5434756194976693058}
   m_RootOrder: 1
@@ -168,6 +186,22 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!58 &7442655931726784911
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5418208704642040745}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.5
 --- !u!1 &5434756194976693059
 GameObject:
   m_ObjectHideFlags: 0
@@ -178,6 +212,9 @@ GameObject:
   m_Component:
   - component: {fileID: 5434756194976693058}
   - component: {fileID: 4172626195809393718}
+  - component: {fileID: 3922213473355437147}
+  - component: {fileID: 6107162769142327049}
+  - component: {fileID: 3522969333465464180}
   m_Layer: 0
   m_Name: player
   m_TagString: Untagged
@@ -228,7 +265,19 @@ MonoBehaviour:
       m_Calls: []
   m_ActionEvents:
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 3922213473355437147}
+        m_TargetAssemblyTypeName: ScGetInput, Assembly-CSharp
+        m_MethodName: GetLeftJoyStickValue
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 5ab3c871-8bd8-4522-af45-89a03c9210cc
     m_ActionName: move/left/right
   m_NeverAutoSwitchControlSchemes: 0
@@ -236,3 +285,53 @@ MonoBehaviour:
   m_DefaultActionMap: move
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &3922213473355437147
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5434756194976693059}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b227b432970f2234ca682332621af42d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &6107162769142327049
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5434756194976693059}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a65b5320016791a439a54a9a2f804a19, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ground:
+    serializedVersion: 2
+    m_Bits: 64
+  MaxXVelocity: 7
+  dragFactor: 1.05
+--- !u!50 &3522969333465464180
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5434756194976693059}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 6200000, guid: 3dfc078e58844554db7dc4f3fcfd74b6, type: 2}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 4

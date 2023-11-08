@@ -1,18 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class ScGetInput : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    private ScPlayerMove movementScript;
+
+    private void Start()
     {
-        
+        movementScript = GetComponent<ScPlayerMove>();
     }
 
-    // Update is called once per frame
-    void Update()
+
+    public void GetLeftJoyStickValue(InputAction.CallbackContext ctxt)
     {
-        
+       movementScript.MoveLeftAndRIght(ctxt.ReadValue<Vector2>().x);
     }
 }

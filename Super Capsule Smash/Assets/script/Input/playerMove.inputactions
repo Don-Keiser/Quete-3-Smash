@@ -9,7 +9,7 @@
                     "name": "left/right",
                     "type": "Value",
                     "id": "5ab3c871-8bd8-4522-af45-89a03c9210cc",
-                    "expectedControlType": "Axis",
+                    "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
@@ -19,9 +19,9 @@
                 {
                     "name": "",
                     "id": "d2ea680c-1370-4eec-b873-fe5b3956ce21",
-                    "path": "<Joystick>/stick/left",
+                    "path": "<Gamepad>/leftStick",
                     "interactions": "",
-                    "processors": "",
+                    "processors": "StickDeadzone",
                     "groups": "",
                     "action": "left/right",
                     "isComposite": false,
