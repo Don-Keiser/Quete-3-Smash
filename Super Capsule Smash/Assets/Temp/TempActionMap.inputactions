@@ -1,0 +1,34 @@
+{
+    "name": "TempActionMap",
+    "maps": [
+        {
+            "name": "Temp",
+            "id": "432811e8-2fba-495b-8974-c7fb40e8dfbe",
+            "actions": [
+                {
+                    "name": "Echap",
+                    "type": "Button",
+                    "id": "112eed90-1978-4e79-ad90-d717ccb1bd53",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "4313af56-7f7a-4706-b106-bacda5da04b8",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Echap",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
