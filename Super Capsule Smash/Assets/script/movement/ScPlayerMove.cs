@@ -10,8 +10,13 @@ public class ScPlayerMove : MonoBehaviour
 {
     private float XInput;
     private float YInput;
+    private float coyoteTimeDuration;
     private bool grounded;
+    private bool inCoyoteTime;
     private bool isJumping;
+    private bool jumpBufferOn;
+    private bool canJump;
+    private float jumpBufferValue;
     private float jumpDuration;
     private Rigidbody2D rb;
     private Transform myTransform;
@@ -19,10 +24,13 @@ public class ScPlayerMove : MonoBehaviour
 
     [SerializeField] private LayerMask ground;
     [SerializeField] private float MaxXVelocity;
-    [SerializeField] private float dragFactor;
+    [SerializeField] private float dragFactorGround;
+    [SerializeField] private float dragFactorAir;
     [SerializeField] private float gravityScale;
-    [SerializeField] private AnimationCurve jumpForce;
+    [SerializeField] private float coyoteTime;
+    [SerializeField] private float jumpBufferMaxTime;
     [SerializeField] private float maxJumpTime;
+    [SerializeField] private AnimationCurve jumpForce;
     [SerializeField] private Transform groundChecker;
 
     private void Start()
@@ -38,8 +46,11 @@ public class ScPlayerMove : MonoBehaviour
         if (isJumping) 
             Jump();
 
+        if (jumpBufferOn)
+            JumpBufferOn();
+
         SpeedLimit();
-        if (grounded)
+        
             ApplyFriction();
     }
 
@@ -50,6 +61,13 @@ public class ScPlayerMove : MonoBehaviour
 
     private void Jump()
     {
+        if (canJump)
+        {
+            canJump = false;
+            Debug.Log("jump mtf");
+            rb.AddForce(Vector2.up * 10, ForceMode2D.Impulse);
+        }
+
         if (jumpDuration > 0)
         {
             //rb.AddForce(Vector2.up * jumpForce.Evaluate(maxJumpTime - jumpDuration) * 10, ForceMode2D.Force);
@@ -61,6 +79,22 @@ public class ScPlayerMove : MonoBehaviour
             isJumping = false;
         }
             
+    }
+    private void JumpBufferOn()
+    {
+        jumpBufferValue -= Time.deltaTime;
+        if (jumpBufferValue < 0)
+            jumpBufferOn = false;
+
+        if (grounded)
+        {
+            jumpBufferValue = 0;
+            jumpBufferOn = false;
+            isJumping = true;
+            jumpDuration = maxJumpTime;
+            canJump = true;
+            Debug.Log("buffer called");
+        }
     }
 
     private void SpeedLimit()
@@ -80,18 +114,33 @@ public class ScPlayerMove : MonoBehaviour
             if (belowMe.transform.gameObject.layer == 6)
             {
                 grounded = true;
+                coyoteTimeDuration = coyoteTime;
+                inCoyoteTime = true;
             }
-            else 
+            else
                 grounded = false;
         }
         else
             grounded = false;
+
+        coyoteTimeDuration -= Time.deltaTime;
+
+        if (coyoteTimeDuration < 0) 
+        {
+            inCoyoteTime = false;
+        }
     }
 
     private void ApplyFriction()
     {
-        if (XInput == 0)
-            rb.velocity = new Vector2(rb.velocity.x / dragFactor, rb.velocity.y);
+        if (grounded)
+        {
+            if (XInput == 0)
+                rb.velocity = new Vector2(rb.velocity.x / dragFactorGround, rb.velocity.y);
+        }
+        else
+            rb.velocity = new Vector2(rb.velocity.x / dragFactorAir, rb.velocity.y);
+
     }
 
     private void ApplyMovement()
@@ -113,16 +162,24 @@ public class ScPlayerMove : MonoBehaviour
     {
         if (getInstruction)
         {
-            if (grounded)
+            if (grounded || inCoyoteTime)
             {
                 isJumping = getInstruction;
                 jumpDuration = maxJumpTime;
-                rb.AddForce(Vector2.up * 10, ForceMode2D.Impulse);
+                canJump = true;
+                
             }
+            else
+            {
+                jumpBufferOn = true;
+                jumpBufferValue = jumpBufferMaxTime;
+            }   
         }
         else
         {
             isJumping = getInstruction;
+            jumpBufferOn = false;
+            jumpBufferValue = jumpBufferMaxTime;
         }
     }
     #endregion
