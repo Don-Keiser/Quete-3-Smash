@@ -1,18 +1,34 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class ScGetInput : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    private ScPlayerMove movementScript;
+
+    private void Start()
     {
-        
+        movementScript = GetComponent<ScPlayerMove>();
     }
 
-    // Update is called once per frame
-    void Update()
+
+    public void GetLeftJoyStickValue(InputAction.CallbackContext ctxt)
     {
-        
+       movementScript.LeftJoystick(ctxt.ReadValue<Vector2>());
+
+    }
+
+    public void GetSouthButon(InputAction.CallbackContext ctxt)
+    {
+        if (ctxt.started)
+        {
+            movementScript.JumpInstruction(true);
+        }
+        if (ctxt.canceled) 
+        {
+            movementScript.JumpInstruction(false);
+        }
     }
 }

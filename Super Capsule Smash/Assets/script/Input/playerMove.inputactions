@@ -9,21 +9,41 @@
                     "name": "left/right",
                     "type": "Value",
                     "id": "5ab3c871-8bd8-4522-af45-89a03c9210cc",
-                    "expectedControlType": "Axis",
+                    "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "jump",
+                    "type": "Button",
+                    "id": "f1b667f2-10cd-40e0-9353-a1536e9146f3",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
                 {
                     "name": "",
                     "id": "d2ea680c-1370-4eec-b873-fe5b3956ce21",
-                    "path": "<Joystick>/stick/left",
+                    "path": "<Gamepad>/leftStick",
+                    "interactions": "",
+                    "processors": "StickDeadzone",
+                    "groups": "",
+                    "action": "left/right",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d3ff9808-2c17-404e-aa4a-c8db302f75a6",
+                    "path": "<Gamepad>/buttonSouth",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "left/right",
+                    "action": "jump",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
