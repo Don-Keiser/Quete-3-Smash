@@ -15,12 +15,15 @@ public class ScPlayerMove : MonoBehaviour
     private bool inCoyoteTime;
     private bool isJumping;
     private bool jumpBufferOn;
+    private bool triggerBuffer;
     private bool canJump;
     private float jumpBufferValue;
     private float jumpDuration;
     private Rigidbody2D rb;
     private Transform myTransform;
     private Vector2 movementForce;
+    private Vector2 exitJumpSpeed;
+    private float exitJumpPreviousPos;
 
     [SerializeField] private LayerMask ground;
     [SerializeField] private float MaxXVelocity;
@@ -33,12 +36,15 @@ public class ScPlayerMove : MonoBehaviour
     [SerializeField] private AnimationCurve jumpForce;
     [SerializeField] private Transform groundChecker;
     [SerializeField] private ScHingJoint LArm;
+    [SerializeField] private ScHingJoint LLeg;
+    [SerializeField] private ScHingJoint RLeg;
 
 
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         myTransform = transform;
+        canJump = true;
     }
     private void FixedUpdate()
     {
@@ -60,16 +66,11 @@ public class ScPlayerMove : MonoBehaviour
 
     private void Jump()
     {
-        if (canJump)
-        {
-            canJump = false;
-            rb.AddForce(Vector2.up * 10, ForceMode2D.Impulse);
-        }
-
         if (jumpDuration > 0)
         {
             //rb.AddForce(Vector2.up * jumpForce.Evaluate(maxJumpTime - jumpDuration) * 10, ForceMode2D.Force);
-            //rb.velocity = (new Vector2(rb.velocity.x, jumpForce.Evaluate(maxJumpTime - jumpDuration) *5));
+            //rb.velocity = (new Vector2(rb.velocity.x, jumpForce.Evaluate(maxJumpTime - jumpDuration)));
+            myTransform.position = new Vector3(myTransform.position.x, myTransform.position.y + (jumpForce.Evaluate(maxJumpTime - jumpDuration)*3) ,0);
             jumpDuration -= Time.deltaTime;
         }
         else
@@ -78,21 +79,47 @@ public class ScPlayerMove : MonoBehaviour
         }
             
     }
+    private void CancelJump()
+    {
+
+        exitJumpSpeed.Set(rb.velocity.x, ((myTransform.position.y - exitJumpPreviousPos) / (maxJumpTime- jumpDuration)) / 2 );
+        rb.velocity = exitJumpSpeed;
+        //rb.AddForce(Vector2.up * jumpForce.Evaluate(jumpDuration), ForceMode2D.Impulse);
+    }
+
     private void JumpBufferOn()
     {
-        jumpBufferValue -= Time.deltaTime;
-        if (jumpBufferValue < 0)
-            jumpBufferOn = false;
-
-        if (grounded)
+        //player try to use the jump buffer 
+        if (triggerBuffer)
         {
-            jumpBufferValue = 0;
-            jumpBufferOn = false;
-            isJumping = true;
-            jumpDuration = maxJumpTime;
-            canJump = true;
-            rb.velocity = new Vector2(rb.velocity.x, 0);
-            Debug.Log("buffer called");
+            jumpBufferValue -= Time.deltaTime;
+            
+            if (jumpBufferValue < 0)
+            {
+                triggerBuffer = false;
+            }// buffer occured too soon 
+            
+            if (grounded)
+            {
+                Debug.Log("jump buffer called");
+                canJump = true;
+                isJumping = true;
+                jumpDuration = maxJumpTime;
+                jumpBufferOn = false;
+                triggerBuffer = false;
+            }//activate the jump buffer
+        }
+        else 
+        {
+            if (grounded)
+            {
+                Debug.Log("back on ground");
+                canJump = true;
+                jumpBufferValue = 0;
+                jumpBufferOn = false;
+                isJumping = false;
+                jumpDuration = maxJumpTime;
+            }
         }
     }
 
@@ -124,10 +151,15 @@ public class ScPlayerMove : MonoBehaviour
     }
     private void ApplyMovement()
     {
-        if (YInput < 0)
-            movementForce.Set(XInput * 100, -(gravityScale + (gravityScale * (-YInput * 10))));
-        else
-            movementForce.Set(XInput * 100, -gravityScale);
+        if (!isJumping)
+        {
+            if (YInput < 0)
+                movementForce.Set(XInput * 100, -(gravityScale + (gravityScale * (-YInput * 10))));
+            else
+                movementForce.Set(XInput * 100, -gravityScale);
+        }
+        else 
+            movementForce.Set(XInput * 100, 0);
 
         rb.AddForce(movementForce, ForceMode2D.Force);
     }
@@ -179,24 +211,26 @@ public class ScPlayerMove : MonoBehaviour
     {
         if (getInstruction)
         {
-            if (grounded || inCoyoteTime)
+            if (    (  ((grounded || inCoyoteTime))  && !isJumping) )
             {
-                isJumping = getInstruction;
+                rb.velocity = new Vector2(rb.velocity.x, 0);
+                isJumping = true;
+                exitJumpPreviousPos = myTransform.position.y;
                 jumpDuration = maxJumpTime;
-                canJump = true;
-                
             }
-            else
+
+            if (jumpBufferOn)
             {
-                jumpBufferOn = true;
-                jumpBufferValue = jumpBufferMaxTime;
-            }   
+                triggerBuffer = true;
+            }
         }
         else
         {
-            isJumping = getInstruction;
-            jumpBufferOn = false;
-            jumpBufferValue = jumpBufferMaxTime;
+            if (isJumping)
+            {
+                CancelJump();
+            }
+            isJumping = false;
         }
     }
     #endregion

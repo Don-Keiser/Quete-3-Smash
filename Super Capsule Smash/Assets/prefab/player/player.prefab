@@ -598,34 +598,43 @@ MonoBehaviour:
   dragFactorAir: 1.01
   gravityScale: 11
   coyoteTime: 0.25
-  jumpBufferMaxTime: 0.5
-  maxJumpTime: 0.25
+  jumpBufferMaxTime: 1
+  maxJumpTime: 0.5
   jumpForce:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 10
-      inSlope: -17.418835
-      outSlope: -17.418835
+      value: 0.099998474
+      inSlope: -0.056791145
+      outSlope: -0.056791145
       tangentMode: 34
       weightedMode: 0
       inWeight: 0
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.18760508
-      value: 6.732138
-      inSlope: -64.13104
-      outSlope: -64.13104
+      time: 0.16370913
+      value: 0.090701245
+      inSlope: -0.10088332
+      outSlope: -0.10088332
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.18352234
-      outWeight: 0.41006273
+      inWeight: 0.33333334
+      outWeight: 0.31929195
     - serializedVersion: 3
-      time: 0.25
-      value: 0
-      inSlope: -107.895615
-      outSlope: -107.895615
+      time: 0.37393096
+      value: 0.053729862
+      inSlope: -0.2534666
+      outSlope: -0.2534666
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.15460795
+      outWeight: 0.5346977
+    - serializedVersion: 3
+      time: 0.5
+      value: -0.000007029623
+      inSlope: -0.4262497
+      outSlope: -0.4262497
       tangentMode: 34
       weightedMode: 0
       inWeight: 0.33333334
@@ -635,6 +644,8 @@ MonoBehaviour:
     m_RotationOrder: 4
   groundChecker: {fileID: 7438558195261818710}
   LArm: {fileID: 2618113574608786558}
+  LLeg: {fileID: 0}
+  RLeg: {fileID: 0}
 --- !u!50 &3522969333465464180
 Rigidbody2D:
   serializedVersion: 4

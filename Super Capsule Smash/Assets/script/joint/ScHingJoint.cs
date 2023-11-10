@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting.Antlr3.Runtime.Tree;
 using UnityEngine;
 
 public class ScHingJoint : MonoBehaviour
@@ -46,14 +47,14 @@ public class ScHingJoint : MonoBehaviour
         Zrotation = Vector2.Angle(trans.position - anchorPoint.position, Vector2.right);
         if (anchorPoint.position.y < trans.position.y)
         {
+            meToAnchorAngle = 180 + (180 - Zrotation);
             Zrotation += 180;
-            meToAnchorAngle = Zrotation;
-            Zrotation = (90 - (180- meToAnchorAngle));
+            Zrotation = (90 - (180- Zrotation));
         }
         else
         {
             meToAnchorAngle = Zrotation;
-            Zrotation = 90 - meToAnchorAngle;
+            Zrotation = 90 - Zrotation;
         }
     }
 
@@ -69,9 +70,11 @@ public class ScHingJoint : MonoBehaviour
     public void MoveOnCommand(float angle)
     {
         // set the angle between the vector right and the limb
-        Debug.Log(angle);
-        //Debug.Log(angle * Mathf.Deg2Rad);
         trans.position = anchorPoint.position + new Vector3(Mathf.Cos(angle * Mathf.Deg2Rad), - Mathf.Sin(angle * Mathf.Deg2Rad), 0).normalized * distanceToAnchor;
-        connectedJoint.MoveOnCommand(angle);
+        
+        if (connectedJoint != null)
+        {
+            connectedJoint.MoveOnCommand(angle);
+        }
     }
 }
