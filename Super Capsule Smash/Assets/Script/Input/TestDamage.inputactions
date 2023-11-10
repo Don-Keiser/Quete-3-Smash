@@ -1,0 +1,94 @@
+{
+    "name": "TestDamage",
+    "maps": [
+        {
+            "name": "Test",
+            "id": "716cea10-41f5-4a9f-b336-2e96cd7e7b30",
+            "actions": [
+                {
+                    "name": "AddDamage",
+                    "type": "Button",
+                    "id": "060fc6f5-5221-4de7-b095-1f08bfa5de50",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "AddDamage2",
+                    "type": "Button",
+                    "id": "e8bf0c94-b4a8-47f1-a1c7-e0e3aa50c767",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "AddScore",
+                    "type": "Button",
+                    "id": "618c58c0-dbb6-4f29-acc2-9c1e16623896",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "AddScore2",
+                    "type": "Button",
+                    "id": "f75040a7-8801-4d61-b648-5da0f7721b05",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "58ed0e6e-80fc-41c4-bedd-872fca9411fa",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "AddDamage",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "71a1ac39-f343-467f-8ba8-1eaec0a3e424",
+                    "path": "<Keyboard>/r",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "AddDamage2",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "223828d7-3a31-497b-be60-cff5c27bad63",
+                    "path": "<Keyboard>/t",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "AddScore",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "04b5671d-79fd-4bbe-8739-e159287efaaa",
+                    "path": "<Keyboard>/y",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "AddScore2",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
