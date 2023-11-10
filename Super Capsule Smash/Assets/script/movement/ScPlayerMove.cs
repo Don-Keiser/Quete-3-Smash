@@ -32,17 +32,16 @@ public class ScPlayerMove : MonoBehaviour
     [SerializeField] private float maxJumpTime;
     [SerializeField] private AnimationCurve jumpForce;
     [SerializeField] private Transform groundChecker;
+    [SerializeField] private ScHingJoint LArm;
+
 
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         myTransform = transform;
     }
-
     private void FixedUpdate()
     {
-        ApplyMovement();
-
         if (isJumping) 
             Jump();
 
@@ -50,10 +49,9 @@ public class ScPlayerMove : MonoBehaviour
             JumpBufferOn();
 
         SpeedLimit();
-        
-            ApplyFriction();
+        ApplyFriction();
+        ApplyMovement();
     }
-
     private void Update()
     {
         GroundCheck();
@@ -93,17 +91,11 @@ public class ScPlayerMove : MonoBehaviour
             isJumping = true;
             jumpDuration = maxJumpTime;
             canJump = true;
+            rb.velocity = new Vector2(rb.velocity.x, 0);
             Debug.Log("buffer called");
         }
     }
 
-    private void SpeedLimit()
-    {
-        if (Mathf.Abs(rb.velocity.x) > MaxXVelocity)
-        {
-            rb.velocity = new Vector2(((rb.velocity.x)/ Mathf.Abs(rb.velocity.x))* MaxXVelocity  , rb.velocity.y);
-        }
-    }
 
     private void GroundCheck()
     {
@@ -130,6 +122,23 @@ public class ScPlayerMove : MonoBehaviour
             inCoyoteTime = false;
         }
     }
+    private void ApplyMovement()
+    {
+        if (YInput < 0)
+            movementForce.Set(XInput * 100, -(gravityScale + (gravityScale * (-YInput * 10))));
+        else
+            movementForce.Set(XInput * 100, -gravityScale);
+
+        rb.AddForce(movementForce, ForceMode2D.Force);
+    }
+    private void SpeedLimit()
+    {
+        if (Mathf.Abs(rb.velocity.x) > MaxXVelocity)
+        {
+            rb.velocity = new Vector2(((rb.velocity.x) / Mathf.Abs(rb.velocity.x)) * MaxXVelocity, rb.velocity.y);
+        }
+    }
+
 
     private void ApplyFriction()
     {
@@ -143,19 +152,13 @@ public class ScPlayerMove : MonoBehaviour
 
     }
 
-    private void ApplyMovement()
-    {
-        movementForce.Set(XInput * 100, - (gravityScale + (gravityScale * (-YInput * 10))));
-
-        rb.AddForce(movementForce, ForceMode2D.Force);
-    }
 
     #region Get Input
     public void LeftJoystick(Vector2 movementValue)
     {
         XInput = movementValue.x;
-        if (movementValue.y <= 0)
-            YInput = movementValue.y;
+
+        YInput = movementValue.y;
     }
 
     public void JumpInstruction(bool getInstruction)
