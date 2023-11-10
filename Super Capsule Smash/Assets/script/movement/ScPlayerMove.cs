@@ -154,11 +154,16 @@ public class ScPlayerMove : MonoBehaviour
 
     private void AnimateBody()
     {
-        if (YInput > 0)
+        if (XInput != 0 && YInput != 0 && grounded)
         {
             LArm.MoveFreely(false);
-            LArm.MoveOnCommand(360 - Vector2.Angle(new Vector2(XInput, YInput).normalized, Vector2.right));
+            if (YInput>0)
+                LArm.MoveOnCommand( 180 + (180- Vector2.Angle(new Vector2(XInput, YInput).normalized, Vector2.right)));
+            else
+                LArm.MoveOnCommand(Vector2.Angle(new Vector2(XInput, YInput).normalized, Vector2.right));
         }
+        else
+            LArm.MoveFreely(true);
     }
 
 

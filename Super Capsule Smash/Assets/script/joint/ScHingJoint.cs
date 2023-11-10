@@ -5,6 +5,7 @@ using UnityEngine;
 public class ScHingJoint : MonoBehaviour
 {
     [SerializeField] Transform anchorPoint;
+    [SerializeField] ScHingJoint connectedJoint;
     [SerializeField] bool grav;
     private Transform trans;
     private float distanceToAnchor;
@@ -12,6 +13,7 @@ public class ScHingJoint : MonoBehaviour
     private float meToAnchorAngle;
     private bool freeMovement;
     private Rigidbody2D rb;
+    
 
     private void Start()
     {
@@ -58,11 +60,18 @@ public class ScHingJoint : MonoBehaviour
     public void MoveFreely(bool isFree)
     {
         freeMovement = isFree;
+        if (connectedJoint != null)
+        {
+            connectedJoint.MoveFreely(isFree); 
+        }
     }
 
     public void MoveOnCommand(float angle)
     {
         // set the angle between the vector right and the limb
+        Debug.Log(angle);
+        //Debug.Log(angle * Mathf.Deg2Rad);
         trans.position = anchorPoint.position + new Vector3(Mathf.Cos(angle * Mathf.Deg2Rad), - Mathf.Sin(angle * Mathf.Deg2Rad), 0).normalized * distanceToAnchor;
+        connectedJoint.MoveOnCommand(angle);
     }
 }

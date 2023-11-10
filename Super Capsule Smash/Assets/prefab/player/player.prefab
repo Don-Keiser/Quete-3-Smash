@@ -457,6 +457,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   anchorPoint: {fileID: 8705464610832658536}
+  connectedJoint: {fileID: 0}
   grav: 1
 --- !u!1 &5434756194976693059
 GameObject:
@@ -788,6 +789,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   anchorPoint: {fileID: 5971408727890975999}
+  connectedJoint: {fileID: 3572161419556802544}
   grav: 1
 --- !u!50 &4348875761738296478
 Rigidbody2D:
@@ -957,6 +959,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   anchorPoint: {fileID: 6299989656609637977}
+  connectedJoint: {fileID: 0}
   grav: 1
 --- !u!50 &513491719841204684
 Rigidbody2D:
@@ -1179,6 +1182,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   anchorPoint: {fileID: 2365156523342510297}
+  connectedJoint: {fileID: 0}
   grav: 1
 --- !u!1 &8871911339509472041
 GameObject:
