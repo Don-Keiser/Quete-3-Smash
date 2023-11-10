@@ -55,6 +55,7 @@ public class ScPlayerMove : MonoBehaviour
     private void Update()
     {
         GroundCheck();
+        AnimateBody();
     }
 
     private void Jump()
@@ -62,7 +63,6 @@ public class ScPlayerMove : MonoBehaviour
         if (canJump)
         {
             canJump = false;
-            Debug.Log("jump mtf");
             rb.AddForce(Vector2.up * 10, ForceMode2D.Impulse);
         }
 
@@ -150,6 +150,15 @@ public class ScPlayerMove : MonoBehaviour
         else
             rb.velocity = new Vector2(rb.velocity.x / dragFactorAir, rb.velocity.y);
 
+    }
+
+    private void AnimateBody()
+    {
+        if (YInput > 0)
+        {
+            LArm.MoveFreely(false);
+            LArm.MoveOnCommand(360 - Vector2.Angle(new Vector2(XInput, YInput).normalized, Vector2.right));
+        }
     }
 
 

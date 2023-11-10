@@ -633,6 +633,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   groundChecker: {fileID: 7438558195261818710}
+  LArm: {fileID: 2618113574608786558}
 --- !u!50 &3522969333465464180
 Rigidbody2D:
   serializedVersion: 4
