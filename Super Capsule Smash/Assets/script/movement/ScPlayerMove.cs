@@ -16,7 +16,7 @@ public class ScPlayerMove : MonoBehaviour
     private bool isJumping;
     private bool jumpBufferOn;
     private bool triggerBuffer;
-    private bool canJump;
+    private bool canDoubleJump;
     private float jumpBufferValue;
     private float jumpDuration;
     private Rigidbody2D rb;
@@ -44,7 +44,7 @@ public class ScPlayerMove : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         myTransform = transform;
-        canJump = true;
+        canDoubleJump = true;
     }
     private void FixedUpdate()
     {
@@ -77,7 +77,7 @@ public class ScPlayerMove : MonoBehaviour
         {
             isJumping = false;
         }
-            
+        
     }
     private void CancelJump()
     {
@@ -102,7 +102,6 @@ public class ScPlayerMove : MonoBehaviour
             if (grounded)
             {
                 Debug.Log("jump buffer called");
-                canJump = true;
                 isJumping = true;
                 jumpDuration = maxJumpTime;
                 jumpBufferOn = false;
@@ -114,7 +113,6 @@ public class ScPlayerMove : MonoBehaviour
             if (grounded)
             {
                 Debug.Log("back on ground");
-                canJump = true;
                 jumpBufferValue = 0;
                 jumpBufferOn = false;
                 isJumping = false;
@@ -135,6 +133,7 @@ public class ScPlayerMove : MonoBehaviour
                 grounded = true;
                 coyoteTimeDuration = coyoteTime;
                 inCoyoteTime = true;
+                canDoubleJump = true;
             }
             else
                 grounded = false;
@@ -170,7 +169,6 @@ public class ScPlayerMove : MonoBehaviour
             rb.velocity = new Vector2(((rb.velocity.x) / Mathf.Abs(rb.velocity.x)) * MaxXVelocity, rb.velocity.y);
         }
     }
-
 
     private void ApplyFriction()
     {
@@ -211,12 +209,21 @@ public class ScPlayerMove : MonoBehaviour
     {
         if (getInstruction)
         {
-            if (    (  ((grounded || inCoyoteTime))  && !isJumping) )
+            if (((grounded || inCoyoteTime))  && !isJumping) // this triggers the first jump 
             {
                 rb.velocity = new Vector2(rb.velocity.x, 0);
                 isJumping = true;
                 exitJumpPreviousPos = myTransform.position.y;
                 jumpDuration = maxJumpTime;
+            }
+
+            if (!grounded && canDoubleJump)
+            {
+                rb.velocity = new Vector2(rb.velocity.x, 0);
+                isJumping = true;
+                exitJumpPreviousPos = myTransform.position.y;
+                jumpDuration = maxJumpTime;
+                canDoubleJump = false;
             }
 
             if (jumpBufferOn)
