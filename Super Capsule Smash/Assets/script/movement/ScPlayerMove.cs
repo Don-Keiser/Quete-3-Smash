@@ -33,7 +33,9 @@ public class ScPlayerMove : MonoBehaviour
     [SerializeField] private float coyoteTime;
     [SerializeField] private float jumpBufferMaxTime;
     [SerializeField] private float maxJumpTime;
+    [SerializeField] private float legMaxSwing; // leg animation max swing in degree 
     [SerializeField] private AnimationCurve jumpForce;
+    [SerializeField] private AnimationCurve legCurve;
     [SerializeField] private Transform groundChecker;
     [SerializeField] private ScHingJoint LArm;
     [SerializeField] private ScHingJoint LLeg;
@@ -45,6 +47,7 @@ public class ScPlayerMove : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         myTransform = transform;
         canDoubleJump = true;
+        LArm.MoveFreely(false);
     }
     private void FixedUpdate()
     {
@@ -85,7 +88,9 @@ public class ScPlayerMove : MonoBehaviour
     {
 
         exitJumpSpeed.Set(rb.velocity.x, ((myTransform.position.y - exitJumpPreviousPos) / (maxJumpTime- jumpDuration)) / 2 );
-        rb.velocity = exitJumpSpeed;
+
+        if (exitJumpSpeed.y != float.PositiveInfinity && exitJumpSpeed.y != float.NegativeInfinity)
+            rb.velocity = exitJumpSpeed;
         //rb.AddForce(Vector2.up * jumpForce.Evaluate(jumpDuration), ForceMode2D.Impulse);
     }
     private void JumpBufferOn()
@@ -102,7 +107,6 @@ public class ScPlayerMove : MonoBehaviour
             
             if (grounded)
             {
-                Debug.Log("jump buffer called");
                 SetUpJumpParameters();
                 jumpBufferOn = false;
                 triggerBuffer = false;
@@ -112,7 +116,6 @@ public class ScPlayerMove : MonoBehaviour
         {
             if (grounded)
             {
-                Debug.Log("back on ground");
                 jumpBufferValue = 0;
                 jumpBufferOn = false;
                 isJumping = false;
@@ -191,7 +194,7 @@ public class ScPlayerMove : MonoBehaviour
 
     private void AnimateBody()
     {
-        if (XInput != 0 && YInput != 0 && grounded)
+        if (XInput != 0 && YInput != 0)
         {
             LArm.MoveFreely(false);
             if (YInput>0)
@@ -201,6 +204,22 @@ public class ScPlayerMove : MonoBehaviour
         }
         else
             LArm.MoveFreely(true);
+
+
+
+        if (XInput != 0 && grounded) 
+        {
+            LLeg.MoveFreely(false);
+            RLeg.MoveFreely(false);
+
+            LLeg.MoveOnCommand( 90 + (  (legCurve.Evaluate(Time.realtimeSinceStartup) * legMaxSwing) * Mathf.Abs(XInput) ) );
+            RLeg.MoveOnCommand(90 - ((legCurve.Evaluate(Time.realtimeSinceStartup) * legMaxSwing) * Mathf.Abs(XInput)));
+        }//animate legs on ground
+        else
+        {
+            LLeg.MoveFreely(true);
+            RLeg.MoveFreely(true);
+        }
     }
 
 
@@ -229,7 +248,6 @@ public class ScPlayerMove : MonoBehaviour
 
             if (jumpBufferOn)
             {
-                Debug.Log("buffer triggered ");
                 triggerBuffer = true;
                 jumpBufferValue = jumpBufferMaxTime;
             }
