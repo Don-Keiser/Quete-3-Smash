@@ -8,23 +8,6 @@ using UnityEngine.Windows;
 
 public class ScPlayerMove : MonoBehaviour
 {
-    private float XInput;
-    private float YInput;
-    private float coyoteTimeDuration;
-    private bool grounded;
-    private bool inCoyoteTime;
-    private bool isJumping;
-    private bool jumpBufferOn;
-    private bool triggerBuffer;
-    private bool canDoubleJump;
-    private float jumpBufferValue;
-    private float jumpDuration;
-    private Rigidbody2D rb;
-    private Transform myTransform;
-    private Vector2 movementForce;
-    private Vector2 exitJumpSpeed;
-    private float exitJumpPreviousPos;
-
     [SerializeField] private LayerMask ground;
     [SerializeField] private float MaxXVelocity;
     [SerializeField] private float dragFactorGround;
@@ -42,11 +25,34 @@ public class ScPlayerMove : MonoBehaviour
     [SerializeField] private ScHingJoint RLeg;
 
 
+
+    private float XInput;
+    private float YInput;
+    private float coyoteTimeDuration;
+    private bool grounded;
+    private bool inCoyoteTime;
+    private bool isJumping;
+    private bool jumpBufferOn;
+    private bool triggerBuffer;
+    private bool canDoubleJump;
+    private bool limitMovement;
+    private float jumpBufferValue;
+    private float jumpDuration;
+    private Rigidbody2D rb;
+    private Transform myTransform;
+    private Vector2 movementForce;
+    private Vector2 exitJumpSpeed;
+    private float exitJumpPreviousPos;
+
+
+
+
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         myTransform = transform;
         canDoubleJump = true;
+        limitMovement = true;
         LArm.MoveFreely(false);
     }
     private void FixedUpdate()
@@ -182,14 +188,16 @@ public class ScPlayerMove : MonoBehaviour
 
     private void ApplyFriction()
     {
-        if (grounded)
+        if (limitMovement)
         {
-            if (XInput == 0)
-                rb.velocity = new Vector2(rb.velocity.x / dragFactorGround, rb.velocity.y);
+            if (grounded)
+            {
+                if (XInput == 0)
+                    rb.velocity = new Vector2(rb.velocity.x / dragFactorGround, rb.velocity.y);
+            }
+            else
+                rb.velocity = new Vector2(rb.velocity.x / dragFactorAir, rb.velocity.y);
         }
-        else
-            rb.velocity = new Vector2(rb.velocity.x / dragFactorAir, rb.velocity.y);
-
     }
 
     private void AnimateBody()
@@ -230,7 +238,10 @@ public class ScPlayerMove : MonoBehaviour
 
         YInput = movementValue.y;
     }
-
+    public void LimitSpeedMovement(bool doLimitMovement)
+    {
+        limitMovement = doLimitMovement;
+    }
     public void JumpInstruction(bool getInstruction)
     {
         if (getInstruction)
