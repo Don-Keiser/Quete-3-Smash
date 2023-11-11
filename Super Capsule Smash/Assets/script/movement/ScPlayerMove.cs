@@ -77,7 +77,9 @@ public class ScPlayerMove : MonoBehaviour
         {
             isJumping = false;
         }
-        
+
+        if (!grounded)
+            jumpBufferOn = true;
     }
     private void CancelJump()
     {
@@ -86,7 +88,6 @@ public class ScPlayerMove : MonoBehaviour
         rb.velocity = exitJumpSpeed;
         //rb.AddForce(Vector2.up * jumpForce.Evaluate(jumpDuration), ForceMode2D.Impulse);
     }
-
     private void JumpBufferOn()
     {
         //player try to use the jump buffer 
@@ -102,8 +103,7 @@ public class ScPlayerMove : MonoBehaviour
             if (grounded)
             {
                 Debug.Log("jump buffer called");
-                isJumping = true;
-                jumpDuration = maxJumpTime;
+                SetUpJumpParameters();
                 jumpBufferOn = false;
                 triggerBuffer = false;
             }//activate the jump buffer
@@ -119,6 +119,13 @@ public class ScPlayerMove : MonoBehaviour
                 jumpDuration = maxJumpTime;
             }
         }
+    }
+    private void SetUpJumpParameters()
+    {
+        rb.velocity = new Vector2(rb.velocity.x, 0);
+        isJumping = true;
+        exitJumpPreviousPos = myTransform.position.y;
+        jumpDuration = maxJumpTime;
     }
 
 
@@ -211,28 +218,25 @@ public class ScPlayerMove : MonoBehaviour
         {
             if (((grounded || inCoyoteTime))  && !isJumping) // this triggers the first jump 
             {
-                rb.velocity = new Vector2(rb.velocity.x, 0);
-                isJumping = true;
-                exitJumpPreviousPos = myTransform.position.y;
-                jumpDuration = maxJumpTime;
+                SetUpJumpParameters();
             }
 
             if (!grounded && canDoubleJump)
             {
-                rb.velocity = new Vector2(rb.velocity.x, 0);
-                isJumping = true;
-                exitJumpPreviousPos = myTransform.position.y;
-                jumpDuration = maxJumpTime;
+                SetUpJumpParameters();
                 canDoubleJump = false;
             }
 
             if (jumpBufferOn)
             {
+                Debug.Log("buffer triggered ");
                 triggerBuffer = true;
+                jumpBufferValue = jumpBufferMaxTime;
             }
         }
         else
         {
+            triggerBuffer = false;
             if (isJumping)
             {
                 CancelJump();
