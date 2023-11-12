@@ -23,6 +23,7 @@ public class ScPlayerMove : MonoBehaviour
     [SerializeField] private ScHingJoint LArm;
     [SerializeField] private ScHingJoint LLeg;
     [SerializeField] private ScHingJoint RLeg;
+    [SerializeField] private List<SpriteRenderer> myMembers;
 
 
 
@@ -54,6 +55,12 @@ public class ScPlayerMove : MonoBehaviour
         canDoubleJump = true;
         limitMovement = true;
         LArm.MoveFreely(false);
+        Color myColor = new Color(Random.Range(0f,1f), Random.Range(0f, 1f), Random.Range(0f, 1f), 1);
+        foreach (SpriteRenderer members in myMembers)
+        {
+            members.color = myColor;
+        }
+
     }
     private void FixedUpdate()
     {

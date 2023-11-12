@@ -673,9 +673,10 @@ GameObject:
   - component: {fileID: 3922213473355437147}
   - component: {fileID: 6107162769142327049}
   - component: {fileID: 8109708434138037900}
+  - component: {fileID: 269967709327239839}
   - component: {fileID: 3522969333465464180}
   - component: {fileID: 2109232304334592221}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -893,6 +894,18 @@ MonoBehaviour:
   LArm: {fileID: 2618113574608786558}
   LLeg: {fileID: 8542314543852277939}
   RLeg: {fileID: 7706358386683698758}
+  myMembers:
+  - {fileID: 3342829893416061598}
+  - {fileID: 4756347644903201281}
+  - {fileID: 8518769816782241720}
+  - {fileID: 8708313967769922323}
+  - {fileID: 1718746921164017630}
+  - {fileID: 6953581240835357195}
+  - {fileID: 5633499860242186476}
+  - {fileID: 8665249053624139154}
+  - {fileID: 6315362527575503182}
+  - {fileID: 6597740602818831052}
+  - {fileID: 8231638702195613373}
 --- !u!114 &8109708434138037900
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -908,9 +921,25 @@ MonoBehaviour:
   leftHand: {fileID: 1876930825286645933}
   partSystem: {fileID: 8759180800127819369}
   movementScript: {fileID: 6107162769142327049}
+  leftHandPunch: {fileID: 3616555112969075674}
   hitParts: {fileID: 6715295138161297459}
   maxAttackSpeed: 150
-  attackDuration: 0.1
+  regularPunchDuration: 0.1
+  fatPunchDuration: 0.15
+  fatPunchLoadTime: 1
+--- !u!114 &269967709327239839
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5434756194976693059}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 062f62c44c9299d4f813d9c1b87f126b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveScript: {fileID: 6107162769142327049}
 --- !u!50 &3522969333465464180
 Rigidbody2D:
   serializedVersion: 4
@@ -1271,6 +1300,7 @@ GameObject:
   - component: {fileID: 4223576601277385444}
   - component: {fileID: 3572161419556802544}
   - component: {fileID: 513491719841204684}
+  - component: {fileID: 3616555112969075674}
   m_Layer: 7
   m_Name: LeftHand
   m_TagString: Untagged
@@ -1356,7 +1386,7 @@ CapsuleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -1398,6 +1428,21 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &3616555112969075674
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7279811578608215423}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b5eafb2ebc4268478d13c65192251d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerMask:
+    serializedVersion: 2
+    m_Bits: 512
 --- !u!1 &8066476753395534648
 GameObject:
   m_ObjectHideFlags: 0

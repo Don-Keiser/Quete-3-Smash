@@ -8,63 +8,103 @@ public class ScAttack : MonoBehaviour
     [SerializeField] Transform leftHand;
     [SerializeField] Transform partSystem;
     [SerializeField] ScPlayerMove movementScript;
+    [SerializeField] ScPunch leftHandPunch;
     [SerializeField] ParticleSystem hitParts;
     [SerializeField] float maxAttackSpeed;
-    [SerializeField] float attackDuration;
+    [SerializeField] float regularPunchDuration;
+    [SerializeField] float fatPunchDuration;
+    [SerializeField] float fatPunchLoadTime;
     private Vector2 attackDir;
     private Rigidbody2D rb;
-    private bool isAttacking;
-    private bool onCoolDown;
     private float attackTimer;
-
-    private void Update()
-    {
-        if (isAttacking)
-        {
-            attackTimer -= Time.deltaTime;
-            //rb.velocity = attackDir.normalized * maxAttackSpeed;
-            transform.position += (Vector3)attackDir/25;
-
-            if (attackTimer < 0) 
-            {
-                partSystem.position = leftHand.position;
-                hitParts.Play();
-                Invoke("StopPart", hitParts.main.duration);
-                isAttacking = false;
-                rb.velocity = Vector3.zero;
-                movementScript.LimitSpeedMovement(true);
-            }
-        }
-    }
-
-    private void StopPart()
-    {
-        hitParts.Stop();
-        onCoolDown = false;
-    }
+    private float attackLoading;
+    private attackState state;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        state = attackState.idle;
+    }
+    private void Update()
+    {
+        if (state == attackState.loading)
+        {
+            // load the attack
+            attackLoading += Time.deltaTime;
+        }
+
+        if (state == attackState.attacking)
+        {
+            SimplePunch();
+        }
     }
 
-    public void AttackInstruction(Vector2 attackDirection)
+    private void SimplePunch()
     {
-        if (!isAttacking && !onCoolDown)
+        // move the player in the punch direction 
+        attackTimer -= Time.deltaTime;
+        transform.position += (Vector3)attackDir / 25;
+
+        if (attackTimer < 0)
+        {
+            LandPunch(false);
+        } // player didn't hit anything
+    }
+    public void LandPunch(bool didLandThePunch)
+    {
+        if (didLandThePunch)
+        {
+            hitParts.Play();
+        }
+        Invoke("StopPart", 0.9f);
+        state = attackState.onCoolDown;
+        rb.velocity = Vector3.zero;
+        movementScript.LimitSpeedMovement(true);
+        leftHandPunch.StopPunching();
+        attackLoading = 0;
+    }
+    private void StopPart()
+    {
+        hitParts.Stop();
+        state = attackState.idle;
+    }
+
+
+    public void AttackInstruction(bool instruction ,Vector2 attackDirection)
+    {
+        if (state == attackState.idle && instruction)
         {
             movementScript.LimitSpeedMovement(false);
-            attackDir = attackDirection;
-            isAttacking = true;
-            onCoolDown = true;
-            attackTimer = attackDuration;
-        }
-    }
+            attackDir = attackDirection.normalized;
+            state = attackState.loading;
+            attackLoading = 0;
+        }// load the attack
 
-    private void SpeedLimitOnAttack()
-    {
-        if (rb.velocity.magnitude > maxAttackSpeed)
+
+        if (!instruction && state == attackState.loading)
         {
-            rb.velocity = rb.velocity.normalized * maxAttackSpeed;
-        }
+            movementScript.LimitSpeedMovement(false);
+            state = attackState.attacking;
+            attackDir = attackDirection.normalized;
+            
+            if (attackLoading > fatPunchLoadTime) //heavy punch
+            {
+                attackTimer = fatPunchDuration;
+                leftHandPunch.EnablePunch(attackDir, false);
+            }
+            else
+            {
+                attackTimer = regularPunchDuration;
+                leftHandPunch.EnablePunch(attackDir, true);
+            }// regular punch
+        }// perform the attack 
     }
+}
+
+public enum attackState
+{
+    loading, 
+    attacking,
+    onCoolDown,
+    idle
 }

@@ -39,7 +39,12 @@ public class ScGetInput : MonoBehaviour
     {
         if (ctxt.started) 
         {
-            attackScript.AttackInstruction(leftJoystickDir);
+            attackScript.AttackInstruction(true, leftJoystickDir);
+        }
+
+        if (ctxt.canceled)
+        {
+            attackScript.AttackInstruction(false, leftJoystickDir);
         }
     }
 }
