@@ -9,42 +9,58 @@ public class ScGetInput : MonoBehaviour
     private ScPlayerMove movementScript;
     private ScAttack attackScript;
     private Vector2 leftJoystickDir;
+    private bool canGetInput;
 
     private void Start()
     {
         movementScript = GetComponent<ScPlayerMove>();
         attackScript = GetComponent<ScAttack>();
+        canGetInput = true;
     }
 
 
     public void GetLeftJoyStickValue(InputAction.CallbackContext ctxt)
     {
-        leftJoystickDir = ctxt.ReadValue<Vector2>();
-       movementScript.LeftJoystick(ctxt.ReadValue<Vector2>());
+        if (movementScript != null && canGetInput)
+        {
+            leftJoystickDir = ctxt.ReadValue<Vector2>();
+            movementScript.LeftJoystick(ctxt.ReadValue<Vector2>());
+        }
     }
 
     public void GetSouthButon(InputAction.CallbackContext ctxt)
     {
-        if (ctxt.started)
+        if (movementScript != null && canGetInput)
         {
-            movementScript.JumpInstruction(true);
-        }
-        if (ctxt.canceled) 
-        {
-            movementScript.JumpInstruction(false);
+            if (ctxt.started)
+            {
+                movementScript.JumpInstruction(true);
+            }
+            if (ctxt.canceled)
+            {
+                movementScript.JumpInstruction(false);
+            }
         }
     }
 
     public void GetRighttrigger(InputAction.CallbackContext ctxt)
     {
-        if (ctxt.started) 
+        if (attackScript != null && canGetInput)
         {
-            attackScript.AttackInstruction(true, leftJoystickDir);
-        }
+            if (ctxt.started)
+            {
+                attackScript.AttackInstruction(true, leftJoystickDir);
+            }
 
-        if (ctxt.canceled)
-        {
-            attackScript.AttackInstruction(false, leftJoystickDir);
+            if (ctxt.canceled)
+            {
+                attackScript.AttackInstruction(false, leftJoystickDir);
+            }
         }
+    }
+
+    public void CanGetInput(bool activ)
+    {
+        canGetInput = activ;
     }
 }
