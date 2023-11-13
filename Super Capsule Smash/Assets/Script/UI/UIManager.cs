@@ -32,7 +32,7 @@ public class UIManager : MonoBehaviour
 
     public void PlayerOut(ScDammage playerOut)
     {
-        ScPlayerInfo lastActiv;
+        ScDammage lastActiv = null;
         int activPlayerCount = 0;
         playersDic[playerOut].SetActive(false) ;
         foreach  ( KeyValuePair<ScDammage, ScPlayerInfo> player in playersDic)
@@ -40,12 +40,12 @@ public class UIManager : MonoBehaviour
             if (player.Value.IsActiv())
             {
                 activPlayerCount ++;
-                lastActiv = player.Value ;
+                lastActiv = player.Key ;
             }
-
         }
         if (activPlayerCount == 1)
         {//need to update the lastActiv score
+            playersDic[lastActiv].IncreaseScore();
             Debug.Log("quelqu'un à gagné let's Go");
         }
     }
