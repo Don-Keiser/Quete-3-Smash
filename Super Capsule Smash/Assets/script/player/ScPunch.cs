@@ -68,9 +68,9 @@ public class ScPunch : MonoBehaviour
                     }
 
                     if (isRegularPunch)
-                        enemiesAround[punchedObject].GetDammage(10, 10, punchDir);
+                        enemiesAround[punchedObject].GetDammage(10, 1, punchDir);
                     else
-                        enemiesAround[punchedObject].GetDammage(25, 20, punchDir);
+                        enemiesAround[punchedObject].GetDammage(25, 2, punchDir);
 
                     isPunching = false;
                     gameObject.layer = LayerMask.NameToLayer("bodyPart");

@@ -9,10 +9,14 @@ public class ScDammage : MonoBehaviour
     [SerializeField] ScPlayerMove moveScript;
     [SerializeField] ScGetInput input;
     [SerializeField] ParticleSystem stunnPart;
+
     private Transform myTrans;
     private Rigidbody2D rb;
-    private float knockBackFactor;
     private int dammage;
+    private bool isStunned;
+    private float stunnLenght;
+    private Vector2 knockBackDir;
+    private Vector2 posOnKnockBack;
 
     private void Start()
     {
@@ -20,22 +24,30 @@ public class ScDammage : MonoBehaviour
         myTrans = transform;
     }
 
-    private void applyKnockBack(Vector2 direction)
+    private void Update()
     {
-        input.CanGetInput(false);
-        moveScript.LimitSpeedMovement(false);
-        rb.velocity = Vector2.zero;
-        rb.AddForce(direction, ForceMode2D.Impulse);
-        Invoke("RestoreControl", dammage/50);
-        stunnPart.Play();
+        if (isStunned)
+        {
+            stunnLenght -= Time.deltaTime;
+            if (stunnLenght < 0)
+            {
+                isStunned = false;
+                input.CanGetInput(true);
+                moveScript.LimitSpeedMovement(true);
+                stunnPart.Stop();
+            }
+
+            applyKnockBack();
+        }
+    }
+
+    private void applyKnockBack()
+    {
+        posOnKnockBack.Set(myTrans.position.x + knockBackDir.x, myTrans.position.y + knockBackDir.y);
+        myTrans.position = posOnKnockBack;
+
     }
     
-    private void RestoreControl()
-    {
-        input.CanGetInput(true);
-        moveScript.LimitSpeedMovement(true);
-        stunnPart.Stop();
-    }
 
     public void GetDammage(int dammageCount, float pushBackForce, Vector2 pushBackDirection)
     {
@@ -43,9 +55,18 @@ public class ScDammage : MonoBehaviour
         if (pushBackDirection != Vector2.zero)
         {
             if (pushBackDirection.y < 0)
-                applyKnockBack((pushBackDirection.normalized + Vector2.down * 2) * (pushBackForce + (dammage / 50)));
+                knockBackDir = (pushBackDirection.normalized) * (pushBackForce + (dammage / 100));
             else
-                applyKnockBack((pushBackDirection.normalized + Vector2.up * 2) * (pushBackForce + (dammage / 50)));
+                knockBackDir = (pushBackDirection.normalized) * (pushBackForce + (dammage / 100));
+
+
+            knockBackDir /= 25;
+            stunnPart.Play();
+            input.CanGetInput(false);
+            moveScript.LimitSpeedMovement(false);
+            stunnLenght = 0.1f + (dammage / 1000);
+            isStunned = true;
+            
         }
     }
 }

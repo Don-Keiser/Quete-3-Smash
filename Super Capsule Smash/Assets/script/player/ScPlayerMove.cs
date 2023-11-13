@@ -42,6 +42,7 @@ public class ScPlayerMove : MonoBehaviour
     private Rigidbody2D rb;
     private Transform myTransform;
     private Vector2 movementForce;
+    private Vector2 posOnJump;
     private Vector2 exitJumpSpeed;
     private float exitJumpPreviousPos;
 
@@ -84,7 +85,8 @@ public class ScPlayerMove : MonoBehaviour
         {
             //rb.AddForce(Vector2.up * jumpForce.Evaluate(maxJumpTime - jumpDuration) * 10, ForceMode2D.Force);
             //rb.velocity = (new Vector2(rb.velocity.x, jumpForce.Evaluate(maxJumpTime - jumpDuration)));
-            myTransform.position = new Vector3(myTransform.position.x, myTransform.position.y + (jumpForce.Evaluate(maxJumpTime - jumpDuration)*3) ,0);
+            posOnJump.Set(myTransform.position.x, myTransform.position.y + (jumpForce.Evaluate(maxJumpTime - jumpDuration) * 3));
+            myTransform.position = posOnJump;
             jumpDuration -= Time.deltaTime;
         }
         else
