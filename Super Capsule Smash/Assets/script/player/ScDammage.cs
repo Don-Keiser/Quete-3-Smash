@@ -9,6 +9,7 @@ public class ScDammage : MonoBehaviour
     [SerializeField] ScPlayerMove moveScript;
     [SerializeField] ScGetInput input;
     [SerializeField] ParticleSystem stunnPart;
+    private UIManager UImanager;
 
     private Transform myTrans;
     private Rigidbody2D rb;
@@ -22,6 +23,8 @@ public class ScDammage : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         myTrans = transform;
+        UImanager = FindAnyObjectByType<UIManager>();
+        UImanager.AddPlayer(this);
     }
 
     private void Update()
@@ -39,6 +42,7 @@ public class ScDammage : MonoBehaviour
 
             applyKnockBack();
         }
+        CheckMapBound();
     }
 
     private void applyKnockBack()
@@ -52,12 +56,11 @@ public class ScDammage : MonoBehaviour
     public void GetDammage(int dammageCount, float pushBackForce, Vector2 pushBackDirection)
     {
         dammage += dammageCount;
+        UImanager.UpdateDammageValue(this, dammage);
         if (pushBackDirection != Vector2.zero)
         {
-            if (pushBackDirection.y < 0)
-                knockBackDir = (pushBackDirection.normalized) * (pushBackForce + (dammage / 100));
-            else
-                knockBackDir = (pushBackDirection.normalized) * (pushBackForce + (dammage / 100));
+
+            knockBackDir = (pushBackDirection.normalized) * (pushBackForce + (dammage / 50));
 
 
             knockBackDir /= 25;
@@ -67,6 +70,15 @@ public class ScDammage : MonoBehaviour
             stunnLenght = 0.1f + (dammage / 1000);
             isStunned = true;
             
+        }
+    }
+
+
+    public void CheckMapBound()
+    {
+        if (myTrans.position.y > 17 || myTrans.position.y < -17 || myTrans.position.x < -24 || myTrans.position.x > 24)
+        {
+            UImanager.PlayerOut(this);
         }
     }
 }
