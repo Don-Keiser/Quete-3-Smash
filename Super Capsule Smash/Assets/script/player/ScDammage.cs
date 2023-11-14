@@ -15,12 +15,14 @@ public class ScDammage : MonoBehaviour
     private Rigidbody2D rb;
     private int dammage;
     private bool isStunned;
+    private bool isDead;
     private float stunnLenght;
     private Vector2 knockBackDir;
     private Vector2 posOnKnockBack;
 
     private void Start()
     {
+        UIManager.Instance.newRound.AddListener(PrepareForAnotherRound);
         rb = GetComponent<Rigidbody2D>();
         myTrans = transform;
         UImanager = FindAnyObjectByType<UIManager>();
@@ -42,14 +44,16 @@ public class ScDammage : MonoBehaviour
 
             applyKnockBack();
         }
-        CheckMapBound();
+        if (!isDead)
+            CheckMapBound();
+        else
+            myTrans.position.Set(500, 500,0);
     }
 
     private void applyKnockBack()
     {
         posOnKnockBack.Set(myTrans.position.x + knockBackDir.x, myTrans.position.y + knockBackDir.y);
         myTrans.position = posOnKnockBack;
-
     }
     
 
@@ -79,6 +83,14 @@ public class ScDammage : MonoBehaviour
         if (myTrans.position.y > 17 || myTrans.position.y < -17 || myTrans.position.x < -24 || myTrans.position.x > 24)
         {
             UImanager.PlayerOut(this);
+            isDead = true;
         }
+    }
+
+
+    private void PrepareForAnotherRound()
+    {
+        Debug.Log("sexe");
+        isDead = false;
     }
 }

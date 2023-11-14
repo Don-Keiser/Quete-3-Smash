@@ -6,14 +6,16 @@ using Unity.VisualScripting;
 
 public class ScPlayerInfo
 {
+    private int playerNum;
     private int score;
     private int dammage;
     private bool isActiv;
     private TMP_Text txtScore;
     private TMP_Text txtDammage;
 
-    public ScPlayerInfo(int score, int dammage, TMP_Text txtScore, TMP_Text txtDammage)
+    public ScPlayerInfo(int playerNumber, int score, int dammage, TMP_Text txtScore, TMP_Text txtDammage)
     {
+        playerNum = playerNumber;
         this.score = score;
         this.dammage = dammage;
         isActiv = true;
@@ -34,6 +36,11 @@ public class ScPlayerInfo
     public bool IsActiv()
     {
         return isActiv;
+    }
+
+    public int GetPlayerNumber()
+    {
+        return playerNum;
     }
 
     public void IncreaseScore()
