@@ -49,4 +49,9 @@ public class ScPlayerInfo
         txtScore.text = score.ToString();
     }
 
+    public void ResetDammage()
+    {
+        dammage = 0;
+    }
+
 }

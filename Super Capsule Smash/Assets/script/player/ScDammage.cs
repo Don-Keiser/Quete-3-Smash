@@ -23,6 +23,7 @@ public class ScDammage : MonoBehaviour
     private void Start()
     {
         UIManager.Instance.newRound.AddListener(PrepareForAnotherRound);
+        UIManager.Instance.roundOver.AddListener(RoundOver);
         rb = GetComponent<Rigidbody2D>();
         myTrans = transform;
         UImanager = FindAnyObjectByType<UIManager>();
@@ -67,7 +68,6 @@ public class ScDammage : MonoBehaviour
 
             knockBackDir = (pushBackDirection.normalized) * (pushBackForce + (dammage / 50));
 
-
             knockBackDir /= 25;
             stunnPart.Play();
             input.CanGetInput(false);
@@ -85,17 +85,28 @@ public class ScDammage : MonoBehaviour
         {
             UImanager.PlayerOut(this);
             isDead = true;
+            moveScript.enabled = false;
         }
     }
-
+    private void RoundOver()
+    {
+        moveScript.enabled = false;
+        input.CanGetInput(false);
+    }
 
     private void PrepareForAnotherRound(int time)
     {
         Invoke("ItIsGoodDayToBeNotDead", time);
+        rb.velocity = Vector2.zero;
+        transform.position = Vector2.zero;
+        dammage = 0;
+        UImanager.UpdateDammageValue(this, dammage);
     }
 
     private void ItIsGoodDayToBeNotDead()
     {
         isDead = false;
+        moveScript.enabled = true;
+        input.CanGetInput(true);
     }
 }

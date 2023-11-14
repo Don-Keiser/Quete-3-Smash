@@ -18,18 +18,17 @@ public class ScmapManagor : MonoBehaviour
 
     private void LoadNextMap(int timeToSlide)
     {
-        current = mapPrefabs[mapPrefabs.Count - 1];
-        Instantiate(current, mapSpawnPos, Quaternion.identity);
+        current = Instantiate(mapPrefabs[Random.Range(1, mapPrefabs.Count)], mapSpawnPos, Quaternion.identity);
         OnTheMove = true;
         Invoke("StopMovingMap", timeToSlide);
+        Destroy(previousMap);
     }
 
     private void Update()
     {
         if (OnTheMove)
         {
-            current.transform.position = Vector3.Lerp(current.transform.position, Vector3.zero,0.1f);
-            previousMap.transform.position = Vector3.Lerp(current.transform.position, -mapSpawnPos, 0.1f);
+            current.transform.position += (-current.transform.position)*0.05f;
         }
     }
 
@@ -38,7 +37,7 @@ public class ScmapManagor : MonoBehaviour
         Debug.Log("map Stop Move ");
         OnTheMove = false;
         current.transform.position = Vector3.zero;
-        Destroy(previousMap );
+
         previousMap = current;
     }
 }

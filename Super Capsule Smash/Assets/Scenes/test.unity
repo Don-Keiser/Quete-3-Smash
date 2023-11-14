@@ -7447,6 +7447,10 @@ PrefabInstance:
       value: -37
       objectReference: {fileID: 0}
     - target: {fileID: 4909559847318507256, guid: 78665ce9cbf94dc419eb3a430db7c6ff, type: 3}
+      propertyPath: mapSpawnPos.x
+      value: -37
+      objectReference: {fileID: 0}
+    - target: {fileID: 4909559847318507256, guid: 78665ce9cbf94dc419eb3a430db7c6ff, type: 3}
       propertyPath: mapPrefabs.Array.data[0]
       value: 
       objectReference: {fileID: 1540719283}
