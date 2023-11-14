@@ -99,8 +99,10 @@ public class ScDammage : MonoBehaviour
     }
     private void RoundOver()
     {
-        moveScript.enabled = false;
+        
         input.CanGetInput(false);
+        moveScript.ResetInputOnNewRound();
+        moveScript.enabled = false;
     }
 
     private void PrepareForAnotherRound(int time)
