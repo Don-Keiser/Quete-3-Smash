@@ -13,6 +13,8 @@ public class ScDammage : MonoBehaviour
 
     private Transform myTrans;
     private Rigidbody2D rb;
+    private Collider2D myColl;
+    private ScmapManagor mapInfo;
     private int dammage;
     private bool isStunned;
     private bool isDead;
@@ -22,15 +24,27 @@ public class ScDammage : MonoBehaviour
 
     private void Start()
     {
+        mapInfo = FindAnyObjectByType<ScmapManagor>();
+        myColl = GetComponent<Collider2D>();
         UIManager.Instance.newRound.AddListener(PrepareForAnotherRound);
         UIManager.Instance.roundOver.AddListener(RoundOver);
         rb = GetComponent<Rigidbody2D>();
         myTrans = transform;
         UImanager = FindAnyObjectByType<UIManager>();
-        UImanager.AddPlayer(this);
+        UImanager.AddPlayer(this, transform);
     }
 
     private void Update()
+    {
+        
+        if (!isDead)
+            CheckMapBound();
+        else
+            myTrans.position.Set(500, 500,0);
+
+    }
+
+    private void FixedUpdate()
     {
         if (isStunned)
         {
@@ -45,11 +59,6 @@ public class ScDammage : MonoBehaviour
 
             applyKnockBack();
         }
-        if (!isDead)
-            CheckMapBound();
-        else
-            myTrans.position.Set(500, 500,0);
-
     }
 
     private void applyKnockBack()
@@ -68,7 +77,7 @@ public class ScDammage : MonoBehaviour
 
             knockBackDir = (pushBackDirection.normalized) * (pushBackForce + (dammage / 50));
 
-            knockBackDir /= 25;
+            knockBackDir /= 2;
             stunnPart.Play();
             input.CanGetInput(false);
             moveScript.LimitSpeedMovement(false);
@@ -98,9 +107,10 @@ public class ScDammage : MonoBehaviour
     {
         Invoke("ItIsGoodDayToBeNotDead", time);
         rb.velocity = Vector2.zero;
-        transform.position = Vector2.zero;
         dammage = 0;
+        transform.position = mapInfo.GetCurrentMapSpawnPoint();
         UImanager.UpdateDammageValue(this, dammage);
+        myColl.enabled = false;
     }
 
     private void ItIsGoodDayToBeNotDead()
@@ -108,5 +118,6 @@ public class ScDammage : MonoBehaviour
         isDead = false;
         moveScript.enabled = true;
         input.CanGetInput(true);
+        myColl.enabled = true;
     }
 }

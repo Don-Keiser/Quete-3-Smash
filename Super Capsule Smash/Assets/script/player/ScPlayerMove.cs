@@ -23,7 +23,7 @@ public class ScPlayerMove : MonoBehaviour
     [SerializeField] private List<SpriteRenderer> myMembers;
 
 
-
+    public Color myColor;
     private float XInput;
     private float YInput;
     private float coyoteTimeDuration;
@@ -51,7 +51,7 @@ public class ScPlayerMove : MonoBehaviour
         canDoubleJump = true;
         limitMovement = true;
         LArm.MoveFreely(false);
-        Color myColor = new Color(Random.Range(0f,1f), Random.Range(0f, 1f), Random.Range(0f, 1f), 1);
+        myColor = new Color(Random.Range(0f,1f), Random.Range(0f, 1f), Random.Range(0f, 1f), 1);
         foreach (SpriteRenderer members in myMembers)
         {
             members.color = myColor;

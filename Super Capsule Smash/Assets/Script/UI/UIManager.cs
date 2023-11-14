@@ -41,11 +41,11 @@ public class UIManager : MonoBehaviour
             roundOver = new UnityEvent();
     }
 
-    public void AddPlayer(ScDammage playerInfo)
+    public void AddPlayer(ScDammage playerInfo, Transform playerTrans)
     {
         if (!playersDic.ContainsKey(playerInfo))
         {
-            playersDic.Add(playerInfo, new ScPlayerInfo(playersDic.Count+1, 0,0, playersScore[playersDic.Count], playersDammage[playersDic.Count]));
+            playersDic.Add(playerInfo, new ScPlayerInfo(playersDic.Count+1, 0,0, playersScore[playersDic.Count], playersDammage[playersDic.Count], playerTrans.GetComponent<ScPlayerMove>().myColor));
         }
     }
 

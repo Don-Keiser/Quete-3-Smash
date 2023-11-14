@@ -25,7 +25,8 @@ public class ScAttack : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         state = attackState.idle;
     }
-    private void Update()
+
+    private void FixedUpdate()
     {
         if (state == attackState.loading)
         {
@@ -43,7 +44,7 @@ public class ScAttack : MonoBehaviour
     {
         // move the player in the punch direction 
         attackTimer -= Time.deltaTime;
-        transform.position += (Vector3)attackDir / 25;
+        transform.position += (Vector3)attackDir / 2;
 
         if (attackTimer < 0)
         {

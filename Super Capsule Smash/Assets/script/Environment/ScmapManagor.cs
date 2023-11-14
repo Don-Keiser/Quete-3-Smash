@@ -40,4 +40,9 @@ public class ScmapManagor : MonoBehaviour
 
         previousMap = current;
     }
+
+    public Vector3 GetCurrentMapSpawnPoint()
+    {
+        return current.GetComponent<ScMap>().GetSpawnPoint() - current.transform.position;
+    }
 }
