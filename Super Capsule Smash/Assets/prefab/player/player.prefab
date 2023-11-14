@@ -785,6 +785,10 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 9fc2c02b-e7ea-4efa-9c9f-2d3df1912fbc
     m_ActionName: move/attack[/XInputControllerWindows/rightTrigger]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 8566f682-da94-4d0a-b734-7b8a0b9d351d
+    m_ActionName: move/Pause[/XInputControllerWindows/start]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: move
@@ -907,6 +911,7 @@ MonoBehaviour:
   - {fileID: 6315362527575503182}
   - {fileID: 6597740602818831052}
   - {fileID: 8231638702195613373}
+  myColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &8109708434138037900
 MonoBehaviour:
   m_ObjectHideFlags: 0
