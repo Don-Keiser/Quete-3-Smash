@@ -15,7 +15,7 @@ public class UIManager : MonoBehaviour
 
     private Dictionary<ScDammage, ScPlayerInfo> playersDic = new Dictionary<ScDammage, ScPlayerInfo>();
 
-    public UnityEvent newRound;
+    public UnityEvent<int> newRound;
 
     private void Awake()
     {
@@ -31,7 +31,7 @@ public class UIManager : MonoBehaviour
     private void Start()
     {
         if(newRound == null)
-            newRound = new UnityEvent();
+            newRound = new UnityEvent<int>();
     }
 
     public void AddPlayer(ScDammage playerInfo)
@@ -74,7 +74,7 @@ public class UIManager : MonoBehaviour
 
     private void StartANewRound()
     {
-        newRound.Invoke();
+        newRound.Invoke(2);
     }
 
 }

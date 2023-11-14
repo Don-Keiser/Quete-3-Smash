@@ -48,6 +48,7 @@ public class ScDammage : MonoBehaviour
             CheckMapBound();
         else
             myTrans.position.Set(500, 500,0);
+
     }
 
     private void applyKnockBack()
@@ -88,9 +89,13 @@ public class ScDammage : MonoBehaviour
     }
 
 
-    private void PrepareForAnotherRound()
+    private void PrepareForAnotherRound(int time)
     {
-        Debug.Log("sexe");
+        Invoke("ItIsGoodDayToBeNotDead", time);
+    }
+
+    private void ItIsGoodDayToBeNotDead()
+    {
         isDead = false;
     }
 }
