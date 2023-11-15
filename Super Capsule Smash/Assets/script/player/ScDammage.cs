@@ -9,6 +9,13 @@ public class ScDammage : MonoBehaviour
     [SerializeField] ScPlayerMove moveScript;
     [SerializeField] ScGetInput input;
     [SerializeField] ParticleSystem stunnPart;
+    [SerializeField] GameObject wallCollEnter;
+
+    private GameObject wallCollPartEnter;
+    private ParticleSystem wallEnterPart;
+    private GameObject wallCollPartExit;
+    private ParticleSystem wallExitPart;
+
     private UIManager UImanager;
 
     private Transform myTrans;
@@ -32,6 +39,12 @@ public class ScDammage : MonoBehaviour
         myTrans = transform;
         UImanager = FindAnyObjectByType<UIManager>();
         UImanager.AddPlayer(this, transform);
+
+        wallCollPartEnter = Instantiate(wallCollEnter, transform.position, Quaternion.identity);
+        wallEnterPart = wallCollPartEnter.GetComponent<ParticleSystem>();
+
+        wallCollPartExit = Instantiate(wallCollEnter, transform.position, Quaternion.identity);
+        wallExitPart = wallCollPartEnter.GetComponent<ParticleSystem>();
     }
 
     private void Update()
@@ -41,6 +54,7 @@ public class ScDammage : MonoBehaviour
             CheckMapBound();
         else
             myTrans.position.Set(500, 500,0);
+
 
     }
 
@@ -103,7 +117,25 @@ public class ScDammage : MonoBehaviour
             {
                 if (collision.transform.gameObject.layer == 6)
                 {
-                    Debug.Log("in wall ");
+                    wallCollPartEnter.transform.position = collision.GetContact(0).point;
+                    wallEnterPart.Play();
+                    Debug.Log("entered a wall");
+                }
+            }
+        }
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (isStunned)
+        {
+            if (collision != null)
+            {
+                if (collision.transform.gameObject.layer == 6)
+                {
+                    wallCollPartExit.transform.position = transform.position;
+                    wallExitPart.Play();
+                    Debug.Log("left a wall");
                 }
             }
         }

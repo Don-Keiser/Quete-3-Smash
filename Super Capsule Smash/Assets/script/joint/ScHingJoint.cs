@@ -23,24 +23,28 @@ public class ScHingJoint : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         freeMovement = true;
     }
-
-    private void Update()
+    private void FixedUpdate()
     {
-        AngleToAnchor();
-        trans.rotation = Quaternion.Euler(trans.rotation.x,trans.rotation.y, Zrotation);
+        
+        trans.rotation = Quaternion.Euler(trans.rotation.x, trans.rotation.y, Zrotation);
 
         if (grav)
         {
-            trans.position = trans.position + new Vector3(0,-0.01f,0);
+            trans.position = trans.position + (new Vector3(0, -0.01f, 0)/ (Time.deltaTime * 10)  );
         }
-            
+
 
         if (Vector2.Distance(trans.position, anchorPoint.position) != distanceToAnchor)
         {
             if (freeMovement)
-                trans.position = anchorPoint.position + (trans.position-anchorPoint.position).normalized * distanceToAnchor;
-            
+                trans.position = anchorPoint.position + ((trans.position - anchorPoint.position).normalized * distanceToAnchor) ;
+
         }
+    }
+
+    private void Update()
+    {
+        AngleToAnchor();
     }
     private void AngleToAnchor()
     {
