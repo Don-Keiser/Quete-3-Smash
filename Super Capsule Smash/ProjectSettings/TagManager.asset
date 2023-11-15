@@ -17,8 +17,8 @@ TagManager:
   - bodyPart
   - punch
   - player
-  - 
-  - 
+  - object
+  - grabbedObject
   - 
   - 
   - 
