@@ -677,6 +677,7 @@ GameObject:
   - component: {fileID: 269967709327239839}
   - component: {fileID: 3522969333465464180}
   - component: {fileID: 2109232304334592221}
+  - component: {fileID: 3425099336986712274}
   m_Layer: 9
   m_Name: player
   m_TagString: Player
@@ -797,6 +798,22 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: c1554065-0a25-4e46-a08c-e7f4722765ab
     m_ActionName: UI/Select[/XInputControllerWindows/buttonSouth,/SwitchProControllerHID/buttonSouth]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3922213473355437147}
+        m_TargetAssemblyTypeName: ScGetInput, Assembly-CSharp
+        m_MethodName: GetLeftTrigger
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: f605a3cf-0e09-4df2-8cd1-09fce0e21a2e
+    m_ActionName: move/leftTrigger[/XInputControllerWindows/leftTrigger]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: move
@@ -994,6 +1011,22 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: -0.01}
   m_Size: {x: 0.5, y: 2.01}
   m_Direction: 0
+--- !u!114 &3425099336986712274
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5434756194976693059}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa0e6c245eb74ac4687b6a095a3a6d91, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shield: {fileID: 9174365617359449881, guid: aa278c5788ba6cd4ebb33e96ebea0b58, type: 3}
+  shieldHolder: {fileID: 5971408727890975999}
+  decreaseRatio: 0
+  radius: 2
 --- !u!1 &5566584991055422616
 GameObject:
   m_ObjectHideFlags: 0

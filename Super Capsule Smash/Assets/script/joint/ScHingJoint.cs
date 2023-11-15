@@ -38,7 +38,6 @@ public class ScHingJoint : MonoBehaviour
         {
             if (freeMovement)
                 trans.position = anchorPoint.position + ((trans.position - anchorPoint.position).normalized * distanceToAnchor) ;
-
         }
     }
 

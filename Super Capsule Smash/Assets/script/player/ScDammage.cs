@@ -44,7 +44,7 @@ public class ScDammage : MonoBehaviour
         wallEnterPart = wallCollPartEnter.GetComponent<ParticleSystem>();
 
         wallCollPartExit = Instantiate(wallCollEnter, transform.position, Quaternion.identity);
-        wallExitPart = wallCollPartEnter.GetComponent<ParticleSystem>();
+        wallExitPart = wallCollPartExit.GetComponent<ParticleSystem>();
     }
 
     private void Update()
@@ -133,7 +133,7 @@ public class ScDammage : MonoBehaviour
             {
                 if (collision.transform.gameObject.layer == 6)
                 {
-                    wallCollPartExit.transform.position = transform.position;
+                    wallCollPartExit.transform.position = myTrans.position;
                     wallExitPart.Play();
                     Debug.Log("left a wall");
                 }
