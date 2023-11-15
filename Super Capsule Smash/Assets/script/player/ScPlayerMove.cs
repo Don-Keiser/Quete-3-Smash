@@ -234,6 +234,12 @@ public class ScPlayerMove : MonoBehaviour
     }
 
 
+    public void ResetInputOnNewRound()
+    {
+        XInput = 0;
+        YInput = 0;
+    }
+
     #region Get Input
     public void LeftJoystick(Vector2 movementValue)
     {
