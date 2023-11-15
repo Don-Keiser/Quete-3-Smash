@@ -49,7 +49,6 @@ public class ScDammage : MonoBehaviour
 
     private void Update()
     {
-        
         if (!isDead)
             CheckMapBound();
         else
@@ -70,7 +69,6 @@ public class ScDammage : MonoBehaviour
                 moveScript.LimitSpeedMovement(true);
                 stunnPart.Stop();
             }
-
             applyKnockBack();
         }
     }
@@ -81,7 +79,6 @@ public class ScDammage : MonoBehaviour
         UImanager.UpdateDammageValue(this, dammage);
         if (pushBackDirection != Vector2.zero)
         {
-
             knockBackDir = (pushBackDirection.normalized) * (pushBackForce + (dammage / 50));
 
             knockBackDir /= 2;
@@ -90,7 +87,6 @@ public class ScDammage : MonoBehaviour
             moveScript.LimitSpeedMovement(false);
             stunnLenght = 0.1f + (dammage / 1000);
             isStunned = true;
-
         }
     }
     private void applyKnockBack()

@@ -10,6 +10,7 @@ public class ScGetInput : MonoBehaviour
     private ScAttack attackScript;
     private ScTempoShield shieldscript;
     private Vector2 leftJoystickDir;
+    private Vector2 rightJoystickDir;
     private bool canGetInput;
 
     private void Start()
@@ -29,7 +30,8 @@ public class ScGetInput : MonoBehaviour
             movementScript.LeftJoystick(ctxt.ReadValue<Vector2>());
         }
 
-        shieldscript.SetshieldDirection(ctxt.ReadValue<Vector2>());
+        if (shieldscript != null)
+            shieldscript.SetshieldDirection(ctxt.ReadValue<Vector2>());
     }
 
     public void GetSouthButon(InputAction.CallbackContext ctxt)
@@ -82,5 +84,11 @@ public class ScGetInput : MonoBehaviour
     public void CanGetInput(bool activ)
     {
         canGetInput = activ;
+
+        if (canGetInput)
+        {
+            movementScript.LeftJoystick(Vector2.zero);
+            shieldscript.SetshieldDirection(Vector2.zero);
+        }//reset all the inputValues
     }
 }
