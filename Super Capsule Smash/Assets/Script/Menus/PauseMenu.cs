@@ -2,28 +2,37 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Windows;
 
 public class PauseMenu : MonoBehaviour
 {
-    [SerializeField] private GameObject pauseManager;
+    [SerializeField] private GameObject pauseMenuHolder;
     [SerializeField] private GameObject pauseMenu;
+    [SerializeField] private ScGetInput input;
+
+    private void Awake()
+    {
+        pauseMenuHolder = GameObject.Find("PauseMenuHolder");
+    }
+
+    private void Start()
+    {
+        pauseMenu = pauseMenuHolder.transform.GetChild(0).gameObject;
+    }
 
     public void Pause(InputAction.CallbackContext ctx)
     {
-        if (ctx.performed)
+        if (ctx.performed && !pauseMenu.activeInHierarchy)
         {
+            input.CanGetInput(false);
             pauseMenu.SetActive(true);
-            pauseManager.SetActive(false);
             Time.timeScale = 0f;
         }
-    }
 
-    public void Resume(InputAction.CallbackContext ctx)
-    {
-        if (ctx.performed)
+        else if (ctx.performed && pauseMenu.activeInHierarchy)
         {
+            input.CanGetInput(true);
             pauseMenu.SetActive(false);
-            pauseManager.SetActive(true);
             Time.timeScale = 1f;
         }
     }
