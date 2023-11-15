@@ -29,7 +29,14 @@ public class ScTempoShield : MonoBehaviour
         if (isActiv)
         {
             myShieldTrans.position = shieldHolder.position + (shieldDirection.normalized * radius);
+            if (myShieldTrans.localScale.x > 0.5f)
+                myShieldTrans.localScale -= new Vector3(((Time.deltaTime * 1.5f)/2) , 0, 0);
             TurnAroundPlayer();
+        }
+        else
+        {
+            if (myShieldTrans.localScale.x < 2f)
+                myShieldTrans.localScale += new Vector3(((Time.deltaTime * 1.5f) / 2), 0, 0);
         }
     }
 
