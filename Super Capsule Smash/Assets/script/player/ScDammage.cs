@@ -61,13 +61,6 @@ public class ScDammage : MonoBehaviour
         }
     }
 
-    private void applyKnockBack()
-    {
-        posOnKnockBack.Set(myTrans.position.x + knockBackDir.x, myTrans.position.y + knockBackDir.y);
-        myTrans.position = posOnKnockBack;
-    }
-    
-
     public void GetDammage(int dammageCount, float pushBackForce, Vector2 pushBackDirection)
     {
         dammage += dammageCount;
@@ -83,10 +76,14 @@ public class ScDammage : MonoBehaviour
             moveScript.LimitSpeedMovement(false);
             stunnLenght = 0.1f + (dammage / 1000);
             isStunned = true;
-            
+
         }
     }
-
+    private void applyKnockBack()
+    {
+        posOnKnockBack.Set(myTrans.position.x + knockBackDir.x, myTrans.position.y + knockBackDir.y);
+        myTrans.position = posOnKnockBack;
+    }
 
     public void CheckMapBound()
     {
@@ -97,6 +94,22 @@ public class ScDammage : MonoBehaviour
             moveScript.enabled = false;
         }
     }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (isStunned)
+        {
+            if (collision!= null)
+            {
+                if (collision.transform.gameObject.layer == 6)
+                {
+                    Debug.Log("in wall ");
+                }
+            }
+        }
+    }
+
+    #region new round 
     private void RoundOver()
     {
         
@@ -104,7 +117,6 @@ public class ScDammage : MonoBehaviour
         moveScript.ResetInputOnNewRound();
         moveScript.enabled = false;
     }
-
     private void PrepareForAnotherRound(int time)
     {
         Invoke("ItIsGoodDayToBeNotDead", time);
@@ -114,7 +126,6 @@ public class ScDammage : MonoBehaviour
         UImanager.UpdateDammageValue(this, dammage);
         myColl.enabled = false;
     }
-
     private void ItIsGoodDayToBeNotDead()
     {
         isDead = false;
@@ -122,4 +133,5 @@ public class ScDammage : MonoBehaviour
         input.CanGetInput(true);
         myColl.enabled = true;
     }
+    #endregion
 }

@@ -789,6 +789,14 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 8566f682-da94-4d0a-b734-7b8a0b9d351d
     m_ActionName: move/Pause[/XInputControllerWindows/start]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: b12c5ab1-83e5-4122-8e1f-589d0cb387e6
+    m_ActionName: UI/Navigation[/XInputControllerWindows/leftStick/up,/SwitchProControllerHID/leftStick/up,/XInputControllerWindows/leftStick/down,/SwitchProControllerHID/leftStick/down,/XInputControllerWindows/leftStick/left,/SwitchProControllerHID/leftStick/left,/XInputControllerWindows/leftStick/right,/SwitchProControllerHID/leftStick/right]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: c1554065-0a25-4e46-a08c-e7f4722765ab
+    m_ActionName: UI/Select[/XInputControllerWindows/buttonSouth,/SwitchProControllerHID/buttonSouth]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: move
@@ -2299,7 +2307,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1350034135309904283, guid: e190bf97c041e58448af6b043116cba0, type: 3}
       propertyPath: m_LocalScale.x
-      value: 3.6200008
+      value: 3.71
       objectReference: {fileID: 0}
     - target: {fileID: 1350034135309904283, guid: e190bf97c041e58448af6b043116cba0, type: 3}
       propertyPath: m_LocalScale.y
@@ -2351,7 +2359,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1350034135309904283, guid: e190bf97c041e58448af6b043116cba0, type: 3}
       propertyPath: m_ConstrainProportionsScale
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2944396702758532163, guid: e190bf97c041e58448af6b043116cba0, type: 3}
       propertyPath: m_Name

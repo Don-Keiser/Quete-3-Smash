@@ -34,7 +34,6 @@ public class ScmapManagor : MonoBehaviour
 
     private void StopMovingMap()
     {
-        Debug.Log("map Stop Move ");
         OnTheMove = false;
         current.transform.position = Vector3.zero;
 

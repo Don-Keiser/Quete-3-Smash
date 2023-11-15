@@ -75,7 +75,7 @@ public class ScAttack : MonoBehaviour
     {
         if (state == attackState.idle && instruction)
         {
-            movementScript.LimitSpeedMovement(false);
+            //movementScript.LimitSpeedMovement(false);
             attackDir = attackDirection.normalized;
             state = attackState.loading;
             attackLoading = 0;
@@ -84,7 +84,7 @@ public class ScAttack : MonoBehaviour
 
         if (!instruction && state == attackState.loading)
         {
-            movementScript.LimitSpeedMovement(false);
+            //movementScript.LimitSpeedMovement(false);
             state = attackState.attacking;
             attackDir = attackDirection.normalized;
             
