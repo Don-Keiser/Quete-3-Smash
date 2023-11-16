@@ -22,6 +22,8 @@ public class ScPlayerMove : MonoBehaviour
     [SerializeField] private ScHingJoint RLeg;
     [SerializeField] private List<SpriteRenderer> myMembers;
 
+    [SerializeField] ScPlayerSounds pSounds;
+
 
     public Color myColor;
     private float XInput;
@@ -139,6 +141,7 @@ public class ScPlayerMove : MonoBehaviour
         isJumping = true;
         exitJumpPreviousPos = myTransform.position.y;
         jumpDuration = maxJumpTime;
+        pSounds.JumpSound();
     }
 
 
