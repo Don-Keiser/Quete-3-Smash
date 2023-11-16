@@ -678,6 +678,7 @@ GameObject:
   - component: {fileID: 3522969333465464180}
   - component: {fileID: 2109232304334592221}
   - component: {fileID: 3425099336986712274}
+  - component: {fileID: 7511003995326332468}
   m_Layer: 9
   m_Name: player
   m_TagString: Player
@@ -788,7 +789,7 @@ MonoBehaviour:
     m_ActionName: move/attack[/XInputControllerWindows/rightTrigger]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 7511003995326332468}
         m_TargetAssemblyTypeName: PauseMenu, Assembly-CSharp
         m_MethodName: Pause
         m_Mode: 0
@@ -826,6 +827,10 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: f605a3cf-0e09-4df2-8cd1-09fce0e21a2e
     m_ActionName: move/leftTrigger[/XInputControllerWindows/leftTrigger]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: de3cb26a-51e0-42ba-b32d-5b5cd2f101e5
+    m_ActionName: move/rightJoyStick[/XInputControllerWindows/rightStick]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: move
@@ -1039,6 +1044,22 @@ MonoBehaviour:
   shieldHolder: {fileID: 5971408727890975999}
   decreaseRatio: 0
   radius: 2
+--- !u!114 &7511003995326332468
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5434756194976693059}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd036eb5c85837e4c8f604a12503ee91, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pauseMenuHolder: {fileID: 0}
+  pauseMenu: {fileID: 0}
+  input: {fileID: 3922213473355437147}
+  players: []
 --- !u!1 &5566584991055422616
 GameObject:
   m_ObjectHideFlags: 0
