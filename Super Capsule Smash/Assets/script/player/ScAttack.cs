@@ -10,7 +10,6 @@ public class ScAttack : MonoBehaviour
     [SerializeField] ScPlayerMove movementScript;
     [SerializeField] ScPunch leftHandPunch;
     [SerializeField] ParticleSystem hitParts;
-    [SerializeField] ParticleSystem chargingFat;
     [SerializeField] float maxAttackSpeed;
     [SerializeField] float regularPunchDuration;
     [SerializeField] float fatPunchDuration;
@@ -25,7 +24,6 @@ public class ScAttack : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         state = attackState.idle;
-        StopChargingFat();
     }
 
     private void FixedUpdate()
@@ -73,11 +71,6 @@ public class ScAttack : MonoBehaviour
         state = attackState.idle;
     }
 
-    private void StopChargingFat()
-    {
-        chargingFat.Stop();
-    }
-
     public void AttackInstruction(bool instruction, Vector2 attackDirection)
     {
         if (state == attackState.idle && instruction)
@@ -87,11 +80,6 @@ public class ScAttack : MonoBehaviour
             state = attackState.loading;
             attackLoading = 0;
         }// load the attack
-
-        if (state == attackState.loading && instruction)
-        {
-            chargingFat.Play();
-        }
 
         if (!instruction && state == attackState.loading)
         {
@@ -104,13 +92,11 @@ public class ScAttack : MonoBehaviour
             {
                 attackTimer = fatPunchDuration;
                 leftHandPunch.EnablePunch(attackDir, false);
-                chargingFat.Stop();
             }
             else
             {
                 attackTimer = regularPunchDuration;
                 leftHandPunch.EnablePunch(attackDir, true);
-                chargingFat.Stop();
             }// regular punch
         }// perform the attack 
     }
