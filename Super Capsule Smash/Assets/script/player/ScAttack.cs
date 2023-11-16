@@ -70,7 +70,6 @@ public class ScAttack : MonoBehaviour
         state = attackState.idle;
     }
 
-
     public void AttackInstruction(bool instruction ,Vector2 attackDirection)
     {
         if (state == attackState.idle && instruction)

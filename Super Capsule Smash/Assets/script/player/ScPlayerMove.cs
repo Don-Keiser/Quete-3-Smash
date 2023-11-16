@@ -99,7 +99,7 @@ public class ScPlayerMove : MonoBehaviour
 
         exitJumpSpeed.Set(rb.velocity.x, ((myTransform.position.y - exitJumpPreviousPos) / (maxJumpTime- jumpDuration)) / 2 );
 
-        if (exitJumpSpeed.y != float.PositiveInfinity && exitJumpSpeed.y != float.NegativeInfinity)
+        if (exitJumpSpeed.y != float.PositiveInfinity && exitJumpSpeed.y != float.NegativeInfinity && exitJumpSpeed.y != float.NaN && exitJumpSpeed.y != float.NaN)
             rb.velocity = exitJumpSpeed;
         //rb.AddForce(Vector2.up * jumpForce.Evaluate(jumpDuration), ForceMode2D.Impulse);
     }
