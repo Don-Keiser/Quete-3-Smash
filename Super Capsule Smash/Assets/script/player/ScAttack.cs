@@ -7,23 +7,27 @@ public class ScAttack : MonoBehaviour
 {
     [SerializeField] Transform leftHand;
     [SerializeField] Transform partSystem;
-    [SerializeField] ScPlayerMove movementScript;
     [SerializeField] ScPunch leftHandPunch;
     [SerializeField] ParticleSystem hitParts;
     [SerializeField] float maxAttackSpeed;
     [SerializeField] float regularPunchDuration;
     [SerializeField] float fatPunchDuration;
     [SerializeField] float fatPunchLoadTime;
+
+    private ScPlayerMove movementScript;
     private Vector2 attackDir;
     private Rigidbody2D rb;
     private float attackTimer;
     private float attackLoading;
+    private bool isHoldingSomething;
     private attackState state;
+    private ScObject heldObject;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         state = attackState.idle;
+        movementScript = GetComponent<ScPlayerMove>();
     }
 
     private void FixedUpdate()
@@ -40,6 +44,7 @@ public class ScAttack : MonoBehaviour
         }
     }
 
+    #region punch
     private void SimplePunch()
     {
         // move the player in the punch direction 
@@ -70,35 +75,68 @@ public class ScAttack : MonoBehaviour
         hitParts.Stop();
         state = attackState.idle;
     }
+    #endregion
 
     public void AttackInstruction(bool instruction, Vector2 attackDirection)
     {
         if (state == attackState.idle && instruction)
         {
-            //movementScript.LimitSpeedMovement(false);
-            attackDir = attackDirection.normalized;
             state = attackState.loading;
-            attackLoading = 0;
+            if (!isHoldingSomething)
+            {
+                //movementScript.LimitSpeedMovement(false);
+                attackDir = attackDirection.normalized;
+                attackLoading = 0;
+            }
+            else
+                heldObject.Use(true);
+
+
         }// load the attack
 
         if (!instruction && state == attackState.loading)
         {
+            if (!isHoldingSomething)
 
-            //movementScript.LimitSpeedMovement(false);
-            state = attackState.attacking;
-            attackDir = attackDirection.normalized;
-
-            if (attackLoading > fatPunchLoadTime) //heavy punch
             {
-                attackTimer = fatPunchDuration;
-                leftHandPunch.EnablePunch(attackDir, false);
+                //movementScript.LimitSpeedMovement(false);
+                state = attackState.attacking;
+                attackDir = attackDirection.normalized;
+
+                if (attackLoading > fatPunchLoadTime) //heavy punch
+                {
+                    attackTimer = fatPunchDuration;
+                    leftHandPunch.EnablePunch(attackDir, false);
+                }
+                else
+                {
+                    attackTimer = regularPunchDuration;
+                    leftHandPunch.EnablePunch(attackDir, true);
+                }// regular punchs
             }
             else
             {
-                attackTimer = regularPunchDuration;
-                leftHandPunch.EnablePunch(attackDir, true);
-            }// regular punch
+                state = attackState.idle;
+                heldObject.Use(false);
+            }
         }// perform the attack 
+    }
+
+
+    public void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision != null)
+        { 
+            if (!isHoldingSomething)
+            {
+                if (collision.gameObject.CompareTag("Objects"))
+                {
+                    isHoldingSomething = true;
+                    heldObject = collision.gameObject.GetComponent<ScObject>();
+                    heldObject.Grab(leftHand,this);
+                }
+            }
+        }
     }
 
 }

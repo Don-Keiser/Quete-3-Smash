@@ -1,43 +1,57 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.WSA;
 
 public class ScObject : MonoBehaviour
 {
-    private GameObject player;
-    private GameObject playerHand;
-    [SerializeField] private Rigidbody2D rb;
+    private Transform holder;
+    private ScAttack playerAttackScript;
+    private bool isBeingHeld;
+    private Vector3 rotationOffset;
+    protected Rigidbody2D rb;
+    protected Vector3 myRotation;
 
-    private bool isAdded = false;
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void Start()
     {
-        if (collision.gameObject.CompareTag("Player") && !IsAdded())
+        rb = GetComponent<Rigidbody2D>();
+        rotationOffset = new Vector3(0,0,-90);
+    }
+
+    #region Grab Function
+    public void Grab(Transform holderTrans, ScAttack attackScript )
+    {
+        SetHeld(true);
+        holder = holderTrans;
+        playerAttackScript = attackScript;
+        rb.gravityScale = 0;
+        gameObject.layer = LayerMask.NameToLayer("grabbedObject");
+        transform.position = holder.position;
+        transform.rotation = holder.rotation;
+    }
+    public void SetHeld(bool hasBeenAdded)
+    {
+        isBeingHeld = hasBeenAdded;
+    }
+    public bool IsHeld()
+    {
+        return isBeingHeld;
+    }
+    #endregion
+
+    public virtual void Use(bool isUsing)
+    {
+        Debug.Log("you didn't implemented anything dumbass");
+    }
+
+    protected void IsBeingHeld()
+    {
+        if (isBeingHeld)
         {
-            gameObject.layer = LayerMask.NameToLayer("grabbedObject");
-            player = collision.gameObject;
-            SetAdded(true);
-            Grab();
+            transform.position = holder.position;
+            myRotation = rotationOffset + holder.rotation.eulerAngles;
+            transform.rotation = Quaternion.Euler(myRotation);
         }
-    }
-
-    private void Grab()
-    {
-        playerHand = player.transform.GetChild(3).GetChild(0).gameObject;
-        this.gameObject.transform.parent = playerHand.transform;
-        rb.isKinematic = true;
-        this.gameObject.transform.position = new Vector3(playerHand.transform.position.x, playerHand.transform.position.y, playerHand.transform.position.z);
-        this.gameObject.transform.rotation = playerHand.transform.rotation;
-    }
-
-
-    public void SetAdded(bool hasBeenAdded)
-    {
-        isAdded = hasBeenAdded;
-    }
-
-    public bool IsAdded()
-    {
-        return isAdded;
     }
 }
