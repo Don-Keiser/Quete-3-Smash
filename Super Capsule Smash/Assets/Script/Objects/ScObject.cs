@@ -10,20 +10,13 @@ public class ScObject : MonoBehaviour
     private bool isBeingHeld;
     private Vector3 rotationOffset;
     protected Rigidbody2D rb;
+    protected Vector3 myRotation;
 
 
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         rotationOffset = new Vector3(0,0,-90);
-    }
-    private void Update()
-    {
-        if (isBeingHeld) 
-        {
-            transform.position = holder.position;
-            transform.rotation = Quaternion.Euler(rotationOffset + holder.rotation.eulerAngles);
-        }
     }
 
     #region Grab Function
@@ -47,8 +40,18 @@ public class ScObject : MonoBehaviour
     }
     #endregion
 
-    public virtual void Use()
+    public virtual void Use(bool isUsing)
     {
-        Debug.Log("sexe");
+        Debug.Log("you didn't implemented anything dumbass");
+    }
+
+    protected void IsBeingHeld()
+    {
+        if (isBeingHeld)
+        {
+            transform.position = holder.position;
+            myRotation = rotationOffset + holder.rotation.eulerAngles;
+            transform.rotation = Quaternion.Euler(myRotation);
+        }
     }
 }

@@ -97,7 +97,7 @@ public class ScDammage : MonoBehaviour
 
     public void CheckMapBound()
     {
-        if (myTrans.position.y > 17 || myTrans.position.y < -17 || myTrans.position.x < -24 || myTrans.position.x > 24)
+        if (Mathf.Abs(myTrans.position.x) > 24 || Mathf.Abs(myTrans.position.y) > 17)
         {
             UImanager.PlayerOut(this);
             isDead = true;
