@@ -9,6 +9,7 @@ public class ScAttack : MonoBehaviour
     [SerializeField] Transform partSystem;
     [SerializeField] ScPunch leftHandPunch;
     [SerializeField] ParticleSystem hitParts;
+    [SerializeField] ParticleSystem fatCharging;
     [SerializeField] float maxAttackSpeed;
     [SerializeField] float regularPunchDuration;
     [SerializeField] float fatPunchDuration;
@@ -25,6 +26,7 @@ public class ScAttack : MonoBehaviour
 
     private void Start()
     {
+        StopChargingPunch();
         rb = GetComponent<Rigidbody2D>();
         state = attackState.idle;
         movementScript = GetComponent<ScPlayerMove>();
@@ -77,6 +79,11 @@ public class ScAttack : MonoBehaviour
     }
     #endregion
 
+    private void StopChargingPunch()
+    {
+        fatCharging.Stop();
+    }
+
     public void AttackInstruction(bool instruction, Vector2 attackDirection)
     {
         if (state == attackState.idle && instruction)
@@ -94,6 +101,11 @@ public class ScAttack : MonoBehaviour
 
         }// load the attack
 
+        if (state == attackState.loading && instruction)
+        {
+            fatCharging.Play();
+        }
+
         if (!instruction && state == attackState.loading)
         {
             if (!isHoldingSomething)
@@ -107,11 +119,13 @@ public class ScAttack : MonoBehaviour
                 {
                     attackTimer = fatPunchDuration;
                     leftHandPunch.EnablePunch(attackDir, false);
+                    StopChargingPunch();
                 }
                 else
                 {
                     attackTimer = regularPunchDuration;
                     leftHandPunch.EnablePunch(attackDir, true);
+                    StopChargingPunch();
                 }// regular punchs
             }
             else
@@ -134,6 +148,7 @@ public class ScAttack : MonoBehaviour
                     isHoldingSomething = true;
                     heldObject = collision.gameObject.GetComponent<ScObject>();
                     heldObject.Grab(leftHand,this);
+                    StopChargingPunch();
                 }
             }
         }

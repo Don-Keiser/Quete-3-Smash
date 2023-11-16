@@ -280,7 +280,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1876930825286645933}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3068305554436347099
 GameObject:
@@ -1002,10 +1002,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   leftHand: {fileID: 1876930825286645933}
   partSystem: {fileID: 0}
-  movementScript: {fileID: 6107162769142327049}
   leftHandPunch: {fileID: 3616555112969075674}
   hitParts: {fileID: 4962989123851862966}
-  chargingFat: {fileID: 8276181955380579755}
+  fatCharging: {fileID: 8276181955380579755}
   maxAttackSpeed: 150
   regularPunchDuration: 0.1
   fatPunchDuration: 0.15
@@ -1556,9 +1555,8 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6944354426674484716}
-
+  - {fileID: 3313079291861705035}
   - {fileID: 963333805493317294}
-
   m_Father: {fileID: 5434756194976693058}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
