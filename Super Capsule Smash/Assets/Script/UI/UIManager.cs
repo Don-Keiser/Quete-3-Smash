@@ -12,6 +12,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] List<TMP_Text> playersDammage = new List<TMP_Text>();
     [SerializeField] Animator playerWonTextAnim = new Animator();
     [SerializeField] TMP_Text playerWonTxt;
+    [SerializeField] TMP_Text joinText;
 
     private Dictionary<ScDammage, ScPlayerInfo> playersDic = new Dictionary<ScDammage, ScPlayerInfo>();
 
@@ -45,15 +46,25 @@ public class UIManager : MonoBehaviour
     {
         if (!playersDic.ContainsKey(playerInfo))
         {
-            playersDic.Add(playerInfo, new ScPlayerInfo(playersDic.Count+1, 0,0, playersScore[playersDic.Count], playersDammage[playersDic.Count], playerTrans.GetComponent<ScPlayerMove>().myColor));
+            playersDic.Add(playerInfo, new ScPlayerInfo(playersDic.Count + 1, 0, 0, playersScore[playersDic.Count], playersDammage[playersDic.Count], playerTrans.GetComponent<ScPlayerMove>().myColor));
+            PlayerJoinTextUpdate();
         }
     }
+
 
     public void UpdateDammageValue(ScDammage playerToUpdate, int dammageValue)
     {
         if (playersDic.ContainsKey(playerToUpdate))
         {
-            playersDic[playerToUpdate].SetDammageText( dammageValue.ToString()) ;
+            playersDic[playerToUpdate].SetDammageText(dammageValue.ToString());
+        }
+    }
+
+    public void PlayerJoinTextUpdate()
+    {
+        if (playersDic.Count > 0)
+        {
+            joinText.gameObject.SetActive(false);
         }
     }
 
