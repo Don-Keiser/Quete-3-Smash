@@ -1,43 +1,54 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.WSA;
 
 public class ScObject : MonoBehaviour
 {
-    private GameObject player;
-    private GameObject playerHand;
-    [SerializeField] private Rigidbody2D rb;
+    private Transform holder;
+    private ScAttack playerAttackScript;
+    private bool isBeingHeld;
+    private Vector3 rotationOffset;
+    protected Rigidbody2D rb;
 
-    private bool isAdded = false;
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void Start()
     {
-        if (collision.gameObject.CompareTag("Player") && !IsAdded())
+        rb = GetComponent<Rigidbody2D>();
+        rotationOffset = new Vector3(0,0,-90);
+    }
+    private void Update()
+    {
+        if (isBeingHeld) 
         {
-            gameObject.layer = LayerMask.NameToLayer("grabbedObject");
-            player = collision.gameObject;
-            SetAdded(true);
-            Grab();
+            transform.position = holder.position;
+            transform.rotation = Quaternion.Euler(rotationOffset + holder.rotation.eulerAngles);
         }
     }
 
-    private void Grab()
+    #region Grab Function
+    public void Grab(Transform holderTrans, ScAttack attackScript )
     {
-        playerHand = player.transform.GetChild(3).GetChild(0).gameObject;
-        this.gameObject.transform.parent = playerHand.transform;
-        rb.isKinematic = true;
-        this.gameObject.transform.position = new Vector3(playerHand.transform.position.x, playerHand.transform.position.y, playerHand.transform.position.z);
-        this.gameObject.transform.rotation = playerHand.transform.rotation;
+        SetHeld(true);
+        holder = holderTrans;
+        playerAttackScript = attackScript;
+        rb.gravityScale = 0;
+        gameObject.layer = LayerMask.NameToLayer("grabbedObject");
+        transform.position = holder.position;
+        transform.rotation = holder.rotation;
     }
-
-
-    public void SetAdded(bool hasBeenAdded)
+    public void SetHeld(bool hasBeenAdded)
     {
-        isAdded = hasBeenAdded;
+        isBeingHeld = hasBeenAdded;
     }
-
-    public bool IsAdded()
+    public bool IsHeld()
     {
-        return isAdded;
+        return isBeingHeld;
+    }
+    #endregion
+
+    public virtual void Use()
+    {
+        Debug.Log("sexe");
     }
 }
