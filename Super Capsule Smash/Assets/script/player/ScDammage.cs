@@ -22,7 +22,7 @@ public class ScDammage : MonoBehaviour
     private Rigidbody2D rb;
     private Collider2D myColl;
     private ScmapManagor mapInfo;
-    private int dammage;
+    public int dammage;
     private bool isStunned;
     private bool isDead;
     private float stunnLenght;
