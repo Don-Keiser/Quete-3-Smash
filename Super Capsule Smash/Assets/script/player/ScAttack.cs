@@ -56,6 +56,7 @@ public class ScAttack : MonoBehaviour
             LandPunch(false);
         } // player didn't hit anything
     }
+
     public void LandPunch(bool didLandThePunch)
     {
         if (didLandThePunch)
@@ -76,7 +77,7 @@ public class ScAttack : MonoBehaviour
     }
     #endregion
 
-    public void AttackInstruction(bool instruction ,Vector2 attackDirection)
+    public void AttackInstruction(bool instruction, Vector2 attackDirection)
     {
         if (state == attackState.idle && instruction)
         {
@@ -90,11 +91,13 @@ public class ScAttack : MonoBehaviour
             else
                 heldObject.Use(true);
 
+
         }// load the attack
 
         if (!instruction && state == attackState.loading)
         {
             if (!isHoldingSomething)
+
             {
                 //movementScript.LimitSpeedMovement(false);
                 state = attackState.attacking;
@@ -119,6 +122,7 @@ public class ScAttack : MonoBehaviour
         }// perform the attack 
     }
 
+
     public void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision != null)
@@ -134,11 +138,12 @@ public class ScAttack : MonoBehaviour
             }
         }
     }
+
 }
 
 public enum attackState
 {
-    loading, 
+    loading,
     attacking,
     onCoolDown,
     idle
