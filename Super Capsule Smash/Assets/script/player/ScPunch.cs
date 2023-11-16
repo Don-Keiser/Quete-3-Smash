@@ -6,8 +6,6 @@ using UnityEngine.UI;
 
 public class ScPunch : MonoBehaviour
 {
-    [SerializeField] ScPlayerSounds pSounds;
-
     [SerializeField] LayerMask playerMask;
     private ScAttack attackScript;
     private ScDammage dammageScript;
@@ -81,7 +79,6 @@ public class ScPunch : MonoBehaviour
                     isPunching = false;
                     gameObject.layer = LayerMask.NameToLayer("bodyPart");
                     attackScript.LandPunch(true);
-                    pSounds.RandomPunchSound();
                 }
 
                 if (punchedObject.layer == 16)
@@ -90,7 +87,6 @@ public class ScPunch : MonoBehaviour
                     isPunching = false;
                     attackScript.LandPunch(false);
                     dammageScript.GetDammage(1,1,-punchDir);
-                    pSounds.ShieldHitSound();
                 }
             }
         }
