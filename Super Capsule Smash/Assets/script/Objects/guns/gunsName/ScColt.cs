@@ -13,12 +13,14 @@ public class ScColt : ScSingle
     protected override void ShootGun()
     {
         var tempo = Instantiate(bulletGo, gunCanon.position, Quaternion.Euler(myRotation));
-        dammageScript.ApplyRecoil(-myForward.normalized,1,0.1f);
+        dammageScript.ApplyRecoil(-myForward.normalized,recoilForce, 0.1f);
         tempo.GetComponent<ScBulletBehav>().SetUpBullet(myForward.normalized , 1f);
+        muzzleFlash.Play();
     }
 
     private void Update()
     {
         IsBeingHeld();
+        OutOfMap();
     }
 }

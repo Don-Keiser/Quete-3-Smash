@@ -6,9 +6,11 @@ public class ScGun : ScObject
 {
     [SerializeField] public GameObject bulletGo;
     [SerializeField] public Transform gunCanon;
+    [SerializeField] protected ParticleSystem muzzleFlash;
     [SerializeField] protected int AmoCount;
-    [SerializeField] protected bool recoil;
-    [SerializeField] protected float fireRate;
+    [SerializeField] protected float fireDelay;
+    [SerializeField] protected float recoilForce;
+    protected float lastFireTime;
     protected bool canShoot = true;
     protected virtual bool CanShoot(bool playerInput)
     {

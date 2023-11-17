@@ -65,14 +65,21 @@ public class ScGetInput : MonoBehaviour
     {
         if (attackScript != null && canGetInput && !isShieldUp)
         {
-            if (ctxt.started)
+            if (ctxt.started )
             {
-                attackScript.AttackInstruction(true, leftJoystickDir);
+                if (rightJoystickDir == Vector2.zero)
+                    attackScript.AttackInstruction(true, leftJoystickDir);
+                else
+                    attackScript.AttackInstruction(true, rightJoystickDir);
             }
+
 
             if (ctxt.canceled)
             {
-                attackScript.AttackInstruction(false, leftJoystickDir);
+                if (rightJoystickDir == Vector2.zero)
+                    attackScript.AttackInstruction(false, leftJoystickDir);
+                else
+                    attackScript.AttackInstruction(false, rightJoystickDir);
             }
         }
     }

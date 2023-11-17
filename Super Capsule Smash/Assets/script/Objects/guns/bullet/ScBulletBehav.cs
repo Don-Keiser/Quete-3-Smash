@@ -68,10 +68,13 @@ public class ScBulletBehav : MonoBehaviour
     private void HitSomething()
     {
         isDestroyed = true;
-        rbSprite.enabled = false;
+        if (rbSprite != null)
+            rbSprite.enabled = false;
+
         hitPart.Play();
         Invoke("DestroyBullet", hitPart.main.duration);
-        col.enabled = false;
+        if (col != null)
+            col.enabled = false;
     }
 
     private void DestroyBullet()

@@ -10,10 +10,11 @@ public class ScSingle : ScGun
     {
         if (playerInput)
         {
-            if (canShoot && AmoCount > 0)
+            if (canShoot && AmoCount > 0 && (Time.time - lastFireTime) > fireDelay)
             {
                 AmoCount--;
                 canShoot = false;
+                lastFireTime = Time.time;
                 return true;
             }
             else
@@ -23,7 +24,7 @@ public class ScSingle : ScGun
         }
         else
         {
-            ResetShoot();
+            canShoot = true;
             return false;
         }
     }
