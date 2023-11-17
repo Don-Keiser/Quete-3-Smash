@@ -5,8 +5,6 @@ using UnityEngine;
 public class ScObjectSpawner : MonoBehaviour
 {
     [SerializeField] List<GameObject> objectToSpawn = new List<GameObject>();
-    [SerializeField] Transform leftBound;
-    [SerializeField] Transform rightBound;
     [SerializeField] private float minDelay;
 
     private bool gameOn;
@@ -37,7 +35,7 @@ public class ScObjectSpawner : MonoBehaviour
 
     private void SpawnObject()
     {
-        spawnPoint.Set(Random.Range(leftBound.position.x, rightBound.position.x), leftBound.position.y, 0);
+        spawnPoint.Set(Random.Range(-13, 13), 15, 0);
         var tempo = Instantiate(objectToSpawn[Random.Range(0,objectToSpawn.Count)], spawnPoint, Quaternion.identity);
         tempo.GetComponent<Rigidbody2D>().AddTorque(Random.Range(100,200));
     }

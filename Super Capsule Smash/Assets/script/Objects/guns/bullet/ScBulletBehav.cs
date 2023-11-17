@@ -43,7 +43,8 @@ public class ScBulletBehav : MonoBehaviour
     public void SetUpBullet(Vector2 direction, float speed)
     {
         myDirection = direction;
-        mySpeed = speed;
+        mySpeed = 1;
+        rb.freezeRotation = true;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -61,6 +62,11 @@ public class ScBulletBehav : MonoBehaviour
             if (tempo.layer == 6)
             {
                 HitSomething();
+            }
+
+            if (tempo.layer == 16)
+            {
+                myDirection = -myDirection;
             }
         }
     }

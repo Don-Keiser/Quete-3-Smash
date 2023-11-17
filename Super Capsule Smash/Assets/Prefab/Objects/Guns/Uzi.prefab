@@ -132,7 +132,7 @@ MonoBehaviour:
   bulletGo: {fileID: 60610820577542000, guid: a1f0e4dc948aba34abc52fb7e4b3f60e, type: 3}
   gunCanon: {fileID: 3152440189516906998}
   muzzleFlash: {fileID: 3751091481417464066}
-  AmoCount: 230
+  AmoCount: 40
   fireDelay: 0.05
   recoilForce: 0.1
 --- !u!1 &3424224817447360168

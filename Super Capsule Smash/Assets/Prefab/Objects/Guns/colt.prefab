@@ -132,7 +132,7 @@ MonoBehaviour:
   bulletGo: {fileID: 60610820577542000, guid: df0c7f2da1b01c344a165fe5e8273330, type: 3}
   gunCanon: {fileID: 3152440189516906998}
   muzzleFlash: {fileID: 4203023190385777740}
-  AmoCount: 40
+  AmoCount: 10
   fireDelay: 0
   recoilForce: 0.5
 --- !u!1 &3424224817447360168
@@ -227,7 +227,15 @@ PrefabInstance:
     m_TransformParent: {fileID: 3257736616433727028}
     m_Modifications:
     - target: {fileID: 60160215543502764, guid: a8192540eaf43054caeb8f0942c480ad, type: 3}
+      propertyPath: looping
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 60160215543502764, guid: a8192540eaf43054caeb8f0942c480ad, type: 3}
       propertyPath: playOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1757460329170691704, guid: a8192540eaf43054caeb8f0942c480ad, type: 3}
+      propertyPath: looping
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1757460329170691704, guid: a8192540eaf43054caeb8f0942c480ad, type: 3}
@@ -299,7 +307,15 @@ PrefabInstance:
       value: muzzleFlash
       objectReference: {fileID: 0}
     - target: {fileID: 4514930615132824418, guid: a8192540eaf43054caeb8f0942c480ad, type: 3}
+      propertyPath: looping
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4514930615132824418, guid: a8192540eaf43054caeb8f0942c480ad, type: 3}
       propertyPath: playOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4862383612453460139, guid: a8192540eaf43054caeb8f0942c480ad, type: 3}
+      propertyPath: looping
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4862383612453460139, guid: a8192540eaf43054caeb8f0942c480ad, type: 3}

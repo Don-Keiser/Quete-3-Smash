@@ -14,7 +14,7 @@ public class ScUzi : ScAuto
     protected override void ShootGun()
     {
         var tempo = Instantiate(bulletGo, gunCanon.position, Quaternion.Euler(myRotation));
-        //dammageScript.ApplyRecoil(-myForward.normalized, recoilForce, 0.1f);
+        dammageScript.ApplyRecoil(-myForward.normalized, recoilForce, 0.05f);
         tempo.GetComponent<ScBulletBehav>().SetUpBullet(myForward.normalized, 1f);
         muzzleFlash.Play();
     }

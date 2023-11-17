@@ -162,6 +162,7 @@ public class ScAttack : MonoBehaviour
                         isHoldingSomething = true;
                         heldObject = collision.gameObject.GetComponent<ScObject>();
                         heldObject.Grab(leftHand, dammageScript, this);
+                        state = attackState.idle;
                         StopChargingPunch();
                     }
                 }
