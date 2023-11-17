@@ -6,7 +6,16 @@ public class ScAuto : ScGun
 {
     protected override bool CanShoot(bool playerInput)
     {
-        return true;
+            if (AmoCount > 0 && (Time.time - lastFireTime) > fireDelay)
+            {
+                AmoCount--;
+                lastFireTime = Time.time;
+                return true;
+            }
+            else
+            {
+                return false;
+            }
     }
     protected override void ShootGun()
     {

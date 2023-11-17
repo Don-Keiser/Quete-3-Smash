@@ -68,15 +68,25 @@ public class ScObject : MonoBehaviour
             myForward.Set(Mathf.Cos(myRotation.z * Mathf.Deg2Rad), Mathf.Sin(myRotation.z * Mathf.Deg2Rad));
         }
     }
-
+     
     public void ThrowObject()
     {
         rb.gravityScale = 1;
         myState = objectState.thrown;
         myTrans.position = myTrans.position + ((Vector3)myForward*2);
         gameObject.layer = LayerMask.NameToLayer("thrownObject");
-        rb.AddForce(myForward * 25, ForceMode2D.Impulse);
+        rb.AddForce(myForward * 35, ForceMode2D.Impulse);
         rb.AddTorque(150);
+        holder = null;
+    }
+    public void Drop()
+    {
+        myState = objectState.idle;
+        rb.gravityScale = 1;
+        myTrans.position = myTrans.position + ((Vector3)myForward * 2);
+        gameObject.layer = LayerMask.NameToLayer("object");
+        rb.AddForce(myForward * 5, ForceMode2D.Impulse);
+        rb.AddTorque(-80);
         holder = null;
     }
 
@@ -91,6 +101,7 @@ public class ScObject : MonoBehaviour
                 {
                     tempo.GetComponent<ScDammage>().GetDammage(2,0.5f,rb.velocity.normalized);
                     onThrowColPart.Play();
+                    myState = objectState.idle;
                     rb.velocity *= -1;
                 }
 
@@ -103,6 +114,7 @@ public class ScObject : MonoBehaviour
                 {
                     rb.velocity *= -1;
                 }
+                gameObject.layer = LayerMask.NameToLayer("object");
             }
         }
     }

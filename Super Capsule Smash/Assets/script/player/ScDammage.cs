@@ -15,6 +15,7 @@ public class ScDammage : MonoBehaviour
     private ParticleSystem wallEnterPart;
     private GameObject wallCollPartExit;
     private ParticleSystem wallExitPart;
+    private ScAttack attackScript;
 
     private UIManager UImanager;
 
@@ -35,6 +36,7 @@ public class ScDammage : MonoBehaviour
     {
         mapInfo = FindAnyObjectByType<ScmapManagor>();
         myColl = GetComponent<Collider2D>();
+        attackScript = GetComponent<ScAttack>();
         UIManager.Instance.newRound.AddListener(PrepareForAnotherRound);
         UIManager.Instance.roundOver.AddListener(RoundOver);
         rb = GetComponent<Rigidbody2D>();
@@ -98,6 +100,7 @@ public class ScDammage : MonoBehaviour
             stunnPart.Play();
             input.CanGetInput(false);
             moveScript.LimitSpeedMovement(false);
+            attackScript.DropObject();
             stunnLenght = 0.1f + (dammage / 1000);
             isStunned = true;
         }
@@ -134,6 +137,7 @@ public class ScDammage : MonoBehaviour
             UImanager.PlayerOut(this);
             isDead = true;
             moveScript.enabled = false;
+            attackScript.ThrowObject();
         }
     }
 

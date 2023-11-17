@@ -6,6 +6,7 @@ public class ScGun : ScObject
 {
     [SerializeField] public GameObject bulletGo;
     [SerializeField] public Transform gunCanon;
+    [SerializeField] protected ParticleSystem muzzleFlash;
     [SerializeField] protected int AmoCount;
     [SerializeField] protected float fireDelay;
     [SerializeField] protected float recoilForce;

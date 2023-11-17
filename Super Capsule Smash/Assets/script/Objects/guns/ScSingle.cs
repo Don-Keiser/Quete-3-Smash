@@ -24,7 +24,7 @@ public class ScSingle : ScGun
         }
         else
         {
-            ResetShoot();
+            canShoot = true;
             return false;
         }
     }

@@ -42,13 +42,16 @@ public class ScAttack : MonoBehaviour
     {
         if (state == attackState.loading)
         {
-            // load the attack
-            attackLoading += Time.deltaTime;
+                // load the attack
+                attackLoading += Time.deltaTime;
         }
 
         if (state == attackState.attacking)
         {
-            SimplePunch();
+            if (!isHoldingSomething)
+                SimplePunch();
+            else
+                heldObject.Use(true);
         }
     }
 
@@ -94,17 +97,17 @@ public class ScAttack : MonoBehaviour
     {
         if (state == attackState.idle && instruction)
         {
-            state = attackState.loading;
             if (!isHoldingSomething)
             {
                 //movementScript.LimitSpeedMovement(false);
                 attackDir = attackDirection.normalized;
                 attackLoading = 0;
+                state = attackState.loading;
             }
             else
-                heldObject.Use(true);
-
-
+            {
+                state = attackState.attacking;
+            }
         }// load the attack
 
         if (state == attackState.loading && instruction)
@@ -115,7 +118,6 @@ public class ScAttack : MonoBehaviour
         if (!instruction && state == attackState.loading)
         {
             if (!isHoldingSomething)
-
             {
                 //movementScript.LimitSpeedMovement(false);
                 state = attackState.attacking;
@@ -134,12 +136,16 @@ public class ScAttack : MonoBehaviour
                     StopChargingPunch();
                 }// regular punchs
             }
-            else
+        }// stop loading
+
+        if (!instruction && state == attackState.attacking)
+        {
+            if (isHoldingSomething)
             {
                 state = attackState.idle;
                 heldObject.Use(false);
             }
-        }// perform the attack 
+        }
     }
 
 
@@ -172,6 +178,17 @@ public class ScAttack : MonoBehaviour
             heldObject = null;
         }
     }
+
+    public void DropObject()
+    {
+        if (isHoldingSomething)
+        {
+            isHoldingSomething = false;
+            heldObject.Drop();
+            heldObject = null;
+        }
+    }
+    
 }
 
 public enum attackState
