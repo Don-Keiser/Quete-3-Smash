@@ -25,8 +25,9 @@ public class ScPlayerMove : MonoBehaviour
 
 
     public Color myColor;
-    private float XInput;
-    private float YInput;
+    private float LXInput;
+    private float LYInput;
+    private Vector2 rightJoystick;
     private float coyoteTimeDuration;
     private bool grounded;
     private bool inCoyoteTime;
@@ -174,13 +175,13 @@ public class ScPlayerMove : MonoBehaviour
     {
         if (!isJumping)
         {
-            if (YInput < 0)
-                movementForce.Set(XInput * 100, -(gravityScale + (gravityScale * (-YInput * 10))));
+            if (LYInput < 0)
+                movementForce.Set(LXInput * 100, -(gravityScale + (gravityScale * (-LYInput * 10))));
             else
-                movementForce.Set(XInput * 100, -gravityScale);
+                movementForce.Set(LXInput * 100, -gravityScale);
         }
         else 
-            movementForce.Set(XInput * 100, 0);
+            movementForce.Set(LXInput * 100, 0);
 
         rb.AddForce(movementForce, ForceMode2D.Force);
     }
@@ -198,7 +199,7 @@ public class ScPlayerMove : MonoBehaviour
         {
             if (grounded)
             {
-                if (XInput == 0)
+                if (LXInput == 0)
                     rb.velocity = new Vector2(rb.velocity.x / dragFactorGround, rb.velocity.y);
             }
             else
@@ -207,26 +208,37 @@ public class ScPlayerMove : MonoBehaviour
     }
     private void AnimateBody()
     {
-        if (XInput != 0 && YInput != 0)
+        if ((LXInput != 0 && LYInput != 0) || rightJoystick!=Vector2.zero)
         {
             LArm.MoveFreely(false);
-            if (YInput>0)
-                LArm.MoveOnCommand( 180 + (180- Vector2.Angle(new Vector2(XInput, YInput).normalized, Vector2.right)));
+            if (rightJoystick == Vector2.zero)
+            {
+                if (LYInput > 0)
+                    LArm.MoveOnCommand(180 + (180 - Vector2.Angle(new Vector2(LXInput, LYInput).normalized, Vector2.right)));
+                else
+                    LArm.MoveOnCommand(Vector2.Angle(new Vector2(LXInput, LYInput).normalized, Vector2.right));
+            }// if the player doesn't give a direction with right joystick
             else
-                LArm.MoveOnCommand(Vector2.Angle(new Vector2(XInput, YInput).normalized, Vector2.right));
+            {
+                if (rightJoystick.y > 0)
+                    LArm.MoveOnCommand(180 + (180 - Vector2.Angle(new Vector2(rightJoystick.x, rightJoystick.y).normalized, Vector2.right)));
+                else
+                    LArm.MoveOnCommand(Vector2.Angle(new Vector2(rightJoystick.x, rightJoystick.y).normalized, Vector2.right));
+            }// arm follow right joystick inputs in priority
+
         }
         else
             LArm.MoveFreely(true);
 
 
 
-        if (XInput != 0 && grounded) 
+        if (LXInput != 0 && grounded) 
         {
             LLeg.MoveFreely(false);
             RLeg.MoveFreely(false);
 
-            LLeg.MoveOnCommand( 90 + (  (legCurve.Evaluate(Time.realtimeSinceStartup) * legMaxSwing) * Mathf.Abs(XInput) ) );
-            RLeg.MoveOnCommand(90 - ((legCurve.Evaluate(Time.realtimeSinceStartup) * legMaxSwing) * Mathf.Abs(XInput)));
+            LLeg.MoveOnCommand( 90 + (  (legCurve.Evaluate(Time.realtimeSinceStartup) * legMaxSwing) * Mathf.Abs(LXInput) ) );
+            RLeg.MoveOnCommand(90 - ((legCurve.Evaluate(Time.realtimeSinceStartup) * legMaxSwing) * Mathf.Abs(LXInput)));
         }//animate legs on ground
         else
         {
@@ -235,19 +247,22 @@ public class ScPlayerMove : MonoBehaviour
         }
     }
 
-
+    
     public void ResetInputOnNewRound()
     {
-        XInput = 0;
-        YInput = 0;
+        LXInput = 0;
+        LYInput = 0;
     }
 
     #region Get Input
     public void LeftJoystick(Vector2 movementValue)
     {
-        XInput = movementValue.x;
-
-        YInput = movementValue.y;
+        LXInput = movementValue.x;
+        LYInput = movementValue.y;
+    }
+    public void RightJoystick(Vector2 movementValue)
+    {
+        rightJoystick = movementValue;
     }
     public void LimitSpeedMovement(bool doLimitMovement)
     {

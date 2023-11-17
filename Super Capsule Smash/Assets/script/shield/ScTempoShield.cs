@@ -6,7 +6,6 @@ public class ScTempoShield : MonoBehaviour
 {
     [SerializeField] GameObject shield;
     [SerializeField] Transform shieldHolder;
-    [SerializeField] int decreaseRatio;
     [SerializeField] float radius;
 
     private GameObject myShieldGo;
