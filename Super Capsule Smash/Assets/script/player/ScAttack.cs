@@ -51,7 +51,10 @@ public class ScAttack : MonoBehaviour
             if (!isHoldingSomething)
                 SimplePunch();
             else
+            {
                 heldObject.Use(true);
+            }
+                
         }
     }
 
@@ -115,6 +118,15 @@ public class ScAttack : MonoBehaviour
             fatCharging.Play();
         }
 
+        if (!instruction)
+        {
+            if (isHoldingSomething)
+            {
+                state = attackState.idle;
+                heldObject.Use(false);
+            }
+        }
+
         if (!instruction && state == attackState.loading)
         {
             if (!isHoldingSomething)
@@ -138,14 +150,7 @@ public class ScAttack : MonoBehaviour
             }
         }// stop loading
 
-        if (!instruction && state == attackState.attacking)
-        {
-            if (isHoldingSomething)
-            {
-                state = attackState.idle;
-                heldObject.Use(false);
-            }
-        }
+
     }
 
 

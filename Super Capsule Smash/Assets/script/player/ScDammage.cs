@@ -71,8 +71,8 @@ public class ScDammage : MonoBehaviour
             if (stunnLenght < 0)
             {
                 isStunned = false;
-                input.CanGetInput(true);
                 moveScript.LimitSpeedMovement(true);
+                moveScript.CanApplyMovement(true);
                 stunnPart.Stop();
             }
             applyKnockBack();
@@ -83,7 +83,7 @@ public class ScDammage : MonoBehaviour
             if (recoilLenght < 0)
             {
                 onRecoil = false;
-                input.CanGetInput(true);
+                moveScript.CanApplyMovement(true);
                 moveScript.LimitSpeedMovement(true);
             }
             applyKnockBack();
@@ -100,7 +100,7 @@ public class ScDammage : MonoBehaviour
 
             knockBackDir /= 2;
             stunnPart.Play();
-            input.CanGetInput(false);
+            moveScript.CanApplyMovement(false);
             moveScript.LimitSpeedMovement(false);
             attackScript.DropObject();
             stunnLenght = 0.1f + (dammage / 1000);
@@ -127,8 +127,8 @@ public class ScDammage : MonoBehaviour
     public void ApplyRecoil(Vector2 recoilDir, float recoilForce, float recoilDuration)
     {
         knockBackDir = (recoilDir.normalized * recoilForce)/2;
-        input.CanGetInput(false);
         moveScript.LimitSpeedMovement(false);
+        moveScript.CanApplyMovement(false);
         recoilLenght = recoilDuration;
         onRecoil = true;
     }
@@ -141,6 +141,7 @@ public class ScDammage : MonoBehaviour
             isDead = true;
             moveScript.enabled = false;
             attackScript.ThrowObject();
+            cameraRef.Shake(0.35f, 0.15f);
         }
     }
 
@@ -154,7 +155,6 @@ public class ScDammage : MonoBehaviour
                 {
                     wallCollPartEnter.transform.position = collision.GetContact(0).point;
                     wallEnterPart.Play();
-                    Debug.Log("entered a wall");
                 }
             }
         }
@@ -170,7 +170,6 @@ public class ScDammage : MonoBehaviour
                 {
                     wallCollPartExit.transform.position = myTrans.position;
                     wallExitPart.Play();
-                    Debug.Log("left a wall");
                 }
             }
         }

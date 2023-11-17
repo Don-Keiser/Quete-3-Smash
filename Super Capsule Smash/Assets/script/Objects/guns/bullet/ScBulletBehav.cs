@@ -43,8 +43,7 @@ public class ScBulletBehav : MonoBehaviour
     public void SetUpBullet(Vector2 direction, float speed)
     {
         myDirection = direction;
-        mySpeed = 1;
-        rb.freezeRotation = true;
+        mySpeed = speed;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

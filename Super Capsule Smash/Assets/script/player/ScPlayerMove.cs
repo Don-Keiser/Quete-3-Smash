@@ -36,6 +36,7 @@ public class ScPlayerMove : MonoBehaviour
     private bool triggerBuffer;
     private bool canDoubleJump;
     private bool limitMovement;
+    private bool canApplyMovements;
     private float jumpBufferValue;
     private float jumpDuration;
     private Rigidbody2D rb;
@@ -52,6 +53,7 @@ public class ScPlayerMove : MonoBehaviour
         myTransform = transform;
         canDoubleJump = true;
         limitMovement = true;
+        canApplyMovements = true;
         LArm.MoveFreely(false);
         myColor = new Color(Random.Range(0f,1f), Random.Range(0f, 1f), Random.Range(0f, 1f), 1);
         foreach (SpriteRenderer members in myMembers)
@@ -183,7 +185,12 @@ public class ScPlayerMove : MonoBehaviour
         else 
             movementForce.Set(LXInput * 100, 0);
 
-        rb.AddForce(movementForce, ForceMode2D.Force);
+        if (canApplyMovements)
+            rb.AddForce(movementForce, ForceMode2D.Force);
+    }
+    public void CanApplyMovement(bool canI)
+    {
+        canApplyMovements = canI;
     }
     private void SpeedLimit()
     {

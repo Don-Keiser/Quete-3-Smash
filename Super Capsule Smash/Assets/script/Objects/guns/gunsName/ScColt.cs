@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ScColt : ScSingle
 {
+    
     public override void Use(bool isUsing)
     {
         if (CanShoot(isUsing))
