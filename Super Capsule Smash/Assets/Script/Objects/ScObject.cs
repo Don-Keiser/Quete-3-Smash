@@ -8,6 +8,7 @@ public class ScObject : MonoBehaviour
     private Transform holder;
     protected Transform myTrans;
     protected ScDammage dammageScript;
+    protected ScAttack attackScript;
     protected Rigidbody2D rb;
     private Vector3 rotationOffset;
     protected Vector3 myRotation;
@@ -27,12 +28,13 @@ public class ScObject : MonoBehaviour
     }
 
     #region Grab Function
-    public void Grab(Transform holderTrans, ScDammage playerDammageScript )
+    public void Grab(Transform holderTrans, ScDammage playerDammageScript, ScAttack playerAttackScript )
     {
         if (myState == objectState.idle)
         {
             gameObject.layer = LayerMask.NameToLayer("grabbedObject");
             dammageScript = playerDammageScript;
+            attackScript = playerAttackScript;
             myState = objectState.held;
             holder = holderTrans;
             transform.position = holder.position;
@@ -99,7 +101,7 @@ public class ScObject : MonoBehaviour
         }
     }
 
-    private void DeleteOnNewRound()
+    protected void DeleteOnNewRound()
     {
         Destroy(gameObject);
     }

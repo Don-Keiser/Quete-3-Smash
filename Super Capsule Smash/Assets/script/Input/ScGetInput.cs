@@ -101,7 +101,7 @@ public class ScGetInput : MonoBehaviour
         {
             if (ctxt.started)
             {
-                attackScript.DropTheObject();
+                attackScript.ThrowObject();
             }
         }
     }
