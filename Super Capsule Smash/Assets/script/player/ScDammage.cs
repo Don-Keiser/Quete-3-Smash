@@ -25,7 +25,9 @@ public class ScDammage : MonoBehaviour
     private int dammage;
     private bool isStunned;
     private bool isDead;
+    private bool onRecoil;
     private float stunnLenght;
+    private float recoilLenght;
     private Vector2 knockBackDir;
     private Vector2 posOnKnockBack;
 
@@ -71,6 +73,17 @@ public class ScDammage : MonoBehaviour
             }
             applyKnockBack();
         }
+        if (onRecoil)
+        {
+            recoilLenght -= Time.deltaTime;
+            if (recoilLenght < 0)
+            {
+                onRecoil = false;
+                input.CanGetInput(true);
+                moveScript.LimitSpeedMovement(true);
+            }
+            applyKnockBack();
+        }
     }
 
     public void GetDammage(int dammageCount, float pushBackForce, Vector2 pushBackDirection)
@@ -93,6 +106,15 @@ public class ScDammage : MonoBehaviour
     {
         posOnKnockBack.Set(myTrans.position.x + knockBackDir.x, myTrans.position.y + knockBackDir.y);
         myTrans.position = posOnKnockBack;
+    }
+
+    public void ApplyRecoil(Vector2 recoilDir, float recoilForce, float recoilDuration)
+    {
+        knockBackDir = (recoilDir.normalized * recoilForce)/2;
+        input.CanGetInput(false);
+        moveScript.LimitSpeedMovement(false);
+        recoilLenght = recoilDuration;
+        onRecoil = true;
     }
 
     public void CheckMapBound()

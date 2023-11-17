@@ -30,6 +30,17 @@ public class ScGetInput : MonoBehaviour
             movementScript.LeftJoystick(ctxt.ReadValue<Vector2>());
         }
 
+        if (shieldscript != null && rightJoystickDir != Vector2.zero)
+            shieldscript.SetshieldDirection(ctxt.ReadValue<Vector2>());
+    }
+    public void GetRightJoyStickValue(InputAction.CallbackContext ctxt)
+    {
+        if (movementScript != null && canGetInput)
+        {
+            rightJoystickDir = ctxt.ReadValue<Vector2>();
+            movementScript.RightJoystick(ctxt.ReadValue<Vector2>());
+        }
+
         if (shieldscript != null)
             shieldscript.SetshieldDirection(ctxt.ReadValue<Vector2>());
     }
@@ -77,6 +88,17 @@ public class ScGetInput : MonoBehaviour
             if (ctxt.canceled)
             {
                 shieldscript.SetShieldActiv(false);
+            }
+        }
+    }
+
+    public void GetLeftShoulder(InputAction.CallbackContext ctxt)
+    {
+        if (attackScript != null && canGetInput)
+        {
+            if (ctxt.started)
+            {
+                attackScript.DropTheObject();
             }
         }
     }

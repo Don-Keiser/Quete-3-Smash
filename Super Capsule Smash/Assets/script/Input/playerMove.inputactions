@@ -58,6 +58,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "leftShoulder",
+                    "type": "Button",
+                    "id": "b8e09ff9-6b1a-4074-94fc-3c3ee6fd77b2",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -124,6 +133,17 @@
                     "processors": "StickDeadzone",
                     "groups": "",
                     "action": "rightJoyStick",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e57784c4-170c-488d-9ded-590dd8e1360f",
+                    "path": "<Gamepad>/leftShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "leftShoulder",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

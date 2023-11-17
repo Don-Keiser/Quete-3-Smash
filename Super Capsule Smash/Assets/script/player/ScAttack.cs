@@ -16,6 +16,7 @@ public class ScAttack : MonoBehaviour
     [SerializeField] float fatPunchLoadTime;
 
     private ScPlayerMove movementScript;
+    private ScDammage dammageScript;
     private Vector2 attackDir;
     private Rigidbody2D rb;
     private float attackTimer;
@@ -24,12 +25,17 @@ public class ScAttack : MonoBehaviour
     private attackState state;
     private ScObject heldObject;
 
+    private UIManager UImanager;
+
     private void Start()
     {
         StopChargingPunch();
         rb = GetComponent<Rigidbody2D>();
-        state = attackState.idle;
         movementScript = GetComponent<ScPlayerMove>();
+        dammageScript = GetComponent<ScDammage>();
+        UIManager.Instance.roundOver.AddListener(DropTheObject);
+        UIManager.Instance.roundOver.AddListener(StopChargingPunch);
+        state = attackState.idle;
     }
 
     private void FixedUpdate()
@@ -145,15 +151,27 @@ public class ScAttack : MonoBehaviour
             {
                 if (collision.gameObject.CompareTag("Objects"))
                 {
-                    isHoldingSomething = true;
-                    heldObject = collision.gameObject.GetComponent<ScObject>();
-                    heldObject.Grab(leftHand,this);
-                    StopChargingPunch();
+                    if (collision.gameObject.GetComponent<ScObject>().CanGrab())
+                    {
+                        isHoldingSomething = true;
+                        heldObject = collision.gameObject.GetComponent<ScObject>();
+                        heldObject.Grab(leftHand, dammageScript);
+                        StopChargingPunch();
+                    }
                 }
             }
         }
     }
 
+    public void DropTheObject()
+    {
+        if (isHoldingSomething)
+        {
+            isHoldingSomething = false;
+            heldObject.ThrowObject();
+            heldObject = null;
+        }
+    }
 }
 
 public enum attackState

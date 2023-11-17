@@ -13,8 +13,8 @@ public class ScColt : ScSingle
     protected override void ShootGun()
     {
         var tempo = Instantiate(bulletGo, gunCanon.position, Quaternion.Euler(myRotation));
-
-        tempo.GetComponent<ScBulletBehav>().SetUpBullet(new Vector2(Mathf.Cos(myRotation.z * Mathf.Deg2Rad), Mathf.Sin(myRotation.z * Mathf.Deg2Rad)).normalized , 3);
+        dammageScript.ApplyRecoil(-myForward.normalized,1,0.1f);
+        tempo.GetComponent<ScBulletBehav>().SetUpBullet(myForward.normalized , 1f);
     }
 
     private void Update()
