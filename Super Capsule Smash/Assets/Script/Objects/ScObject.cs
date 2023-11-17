@@ -97,6 +97,11 @@ public class ScObject : MonoBehaviour
                 {
                     myState = objectState.idle;
                 }
+
+                if (tempo.layer == 16)
+                {
+                    rb.velocity *= -1;
+                }
             }
         }
     }
