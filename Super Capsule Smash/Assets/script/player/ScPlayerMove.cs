@@ -100,8 +100,8 @@ public class ScPlayerMove : MonoBehaviour
     }
     private void CancelJump()
     {
-
-        exitJumpSpeed.Set(rb.velocity.x, ((myTransform.position.y - exitJumpPreviousPos) / (maxJumpTime- jumpDuration)) / 2 );
+        if ( (((myTransform.position.y - exitJumpPreviousPos) / (maxJumpTime - jumpDuration)) / 2) != float.NaN)
+            exitJumpSpeed.Set(rb.velocity.x, ((myTransform.position.y - exitJumpPreviousPos) / (maxJumpTime - jumpDuration)) / 2 );
 
         if (exitJumpSpeed.y != float.PositiveInfinity && exitJumpSpeed.y != float.NegativeInfinity && exitJumpSpeed.y != float.NaN && exitJumpSpeed.y != float.NaN)
             rb.velocity = exitJumpSpeed;
