@@ -8,6 +8,7 @@ public class ScUzi : ScAuto
     {
         if (CanShoot(isUsing) && isUsing)
         {
+            UziSound();
             ShootGun();
         }
     }
@@ -17,6 +18,12 @@ public class ScUzi : ScAuto
         dammageScript.ApplyRecoil(-myForward.normalized, recoilForce, 0.05f);
         tempo.GetComponent<ScBulletBehav>().SetUpBullet(myForward.normalized, 1f);
         muzzleFlash.Play();
+    }
+
+    public void UziSound()
+    {
+        objectAudioSource.clip = objectAudioClip;
+        objectAudioSource.Play();
     }
 
     private void Update()

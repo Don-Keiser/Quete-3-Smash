@@ -9,7 +9,7 @@ public class ScHeal : ScObject
 
     public override void Use(bool isUsing)
     {
-        dammageScript.Heal(50);
+        dammageScript.Heal(healValue);
         DeleteOnNewRound();
         attackScript.ThrowObject();
     }

@@ -8,7 +8,10 @@ public class ScColt : ScSingle
     public override void Use(bool isUsing)
     {
         if (CanShoot(isUsing))
+        {
+            ColtSound();
             ShootGun();
+        }
     }
 
     protected override void ShootGun()
@@ -17,6 +20,12 @@ public class ScColt : ScSingle
         dammageScript.ApplyRecoil(-myForward.normalized,recoilForce, 0.1f);
         tempo.GetComponent<ScBulletBehav>().SetUpBullet(myForward.normalized , 1f);
         muzzleFlash.Play();
+    }
+
+    public void ColtSound()
+    {
+        objectAudioSource.clip = objectAudioClip;
+        objectAudioSource.Play();
     }
 
     private void Update()

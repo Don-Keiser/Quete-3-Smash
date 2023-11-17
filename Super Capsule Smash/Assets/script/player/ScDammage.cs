@@ -33,6 +33,9 @@ public class ScDammage : MonoBehaviour
     private Vector2 knockBackDir;
     private Vector2 posOnKnockBack;
 
+    [SerializeField] private AudioSource healAudioSource;
+    [SerializeField] private AudioClip healClip;
+
     private void Start()
     {
         mapInfo = FindAnyObjectByType<ScmapManagor>();
@@ -116,12 +119,19 @@ public class ScDammage : MonoBehaviour
 
     public void Heal(int healValue)
     {
+        HealSound();
         dammage -= healValue;
         if (dammage < 0)
         {
             dammage = 0;
         }
         UImanager.UpdateDammageValue(this, dammage);
+    }
+
+    public void HealSound()
+    {
+        healAudioSource.clip = healClip;
+        healAudioSource.Play();
     }
 
     public void ApplyRecoil(Vector2 recoilDir, float recoilForce, float recoilDuration)

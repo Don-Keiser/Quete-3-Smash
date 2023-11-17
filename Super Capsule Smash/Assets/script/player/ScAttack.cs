@@ -14,6 +14,8 @@ public class ScAttack : MonoBehaviour
     [SerializeField] float regularPunchDuration;
     [SerializeField] float fatPunchDuration;
     [SerializeField] float fatPunchLoadTime;
+    [SerializeField] AudioSource oTakeAS;
+    [SerializeField] AudioClip oTakeClip;
 
     private ScPlayerMove movementScript;
     private ScDammage dammageScript;
@@ -164,6 +166,10 @@ public class ScAttack : MonoBehaviour
                 {
                     if (collision.gameObject.GetComponent<ScObject>().CanGrab())
                     {
+                        if (collision.gameObject.GetComponent<ScGun>())
+                        {
+                            OnTakeObjectSound();
+                        }
                         isHoldingSomething = true;
                         heldObject = collision.gameObject.GetComponent<ScObject>();
                         heldObject.Grab(leftHand, dammageScript, this);
@@ -173,6 +179,12 @@ public class ScAttack : MonoBehaviour
                 }
             }
         }
+    }
+
+    private void OnTakeObjectSound()
+    {
+        oTakeAS.clip = oTakeClip;
+        oTakeAS.Play();
     }
 
     public void ThrowObject()

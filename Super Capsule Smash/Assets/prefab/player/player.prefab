@@ -1037,6 +1037,8 @@ MonoBehaviour:
   regularPunchDuration: 0.1
   fatPunchDuration: 0.15
   fatPunchLoadTime: 1
+  oTakeAS: {fileID: 2812539406984907016}
+  oTakeClip: {fileID: 8300000, guid: 9acfc20ffafce6e4bab3c0dc8a5fd380, type: 3}
 --- !u!114 &269967709327239839
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1053,6 +1055,8 @@ MonoBehaviour:
   input: {fileID: 3922213473355437147}
   stunnPart: {fileID: 507641818676539702}
   wallCollEnter: {fileID: 2800207591080188333, guid: 0cb6ebdf150d6cb4f9e40603f63fa381, type: 3}
+  healAudioSource: {fileID: 2812539406984907016}
+  healClip: {fileID: 8300000, guid: ffe66f19e8bd56649a1c9195f986d7d6, type: 3}
 --- !u!50 &3522969333465464180
 Rigidbody2D:
   serializedVersion: 4
@@ -1104,7 +1108,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shield: {fileID: 9174365617359449881, guid: aa278c5788ba6cd4ebb33e96ebea0b58, type: 3}
   shieldHolder: {fileID: 5971408727890975999}
-  decreaseRatio: 0
   radius: 2
 --- !u!114 &7511003995326332468
 MonoBehaviour:

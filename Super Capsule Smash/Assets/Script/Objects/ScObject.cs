@@ -16,6 +16,9 @@ public class ScObject : MonoBehaviour
     protected Vector2 myForward;
     protected objectState myState;
 
+    [SerializeField] protected AudioSource objectAudioSource;
+    [SerializeField] protected AudioClip objectAudioClip;
+
     private UIManager UImanager;
 
 
