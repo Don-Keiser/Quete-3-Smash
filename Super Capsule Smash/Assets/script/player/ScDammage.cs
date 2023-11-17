@@ -10,6 +10,7 @@ public class ScDammage : MonoBehaviour
     [SerializeField] ScGetInput input;
     [SerializeField] ParticleSystem stunnPart;
     [SerializeField] GameObject wallCollEnter;
+    private ScScreenShake cameraRef;
 
     private GameObject wallCollPartEnter;
     private ParticleSystem wallEnterPart;
@@ -41,6 +42,7 @@ public class ScDammage : MonoBehaviour
         myTrans = transform;
         UImanager = FindAnyObjectByType<UIManager>();
         UImanager.AddPlayer(this, transform);
+        cameraRef = ScScreenShake.Instance;
 
         wallCollPartEnter = Instantiate(wallCollEnter, transform.position, Quaternion.identity);
         wallEnterPart = wallCollPartEnter.GetComponent<ParticleSystem>();
@@ -100,6 +102,7 @@ public class ScDammage : MonoBehaviour
             moveScript.LimitSpeedMovement(false);
             stunnLenght = 0.1f + (dammage / 1000);
             isStunned = true;
+            cameraRef.Shake(0.35f, 0.15f);
         }
     }
     private void applyKnockBack()
