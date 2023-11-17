@@ -131,8 +131,8 @@ MonoBehaviour:
   bulletGo: {fileID: 60610820577542000, guid: df0c7f2da1b01c344a165fe5e8273330, type: 3}
   gunCanon: {fileID: 3152440189516906998}
   AmoCount: 40
-  recoil: 0
-  fireRate: 0
+  fireDelay: 0
+  recoilForce: 0.5
 --- !u!1 &3424224817447360168
 GameObject:
   m_ObjectHideFlags: 0

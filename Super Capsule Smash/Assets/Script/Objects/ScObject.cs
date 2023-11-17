@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class ScObject : MonoBehaviour
@@ -109,6 +110,14 @@ public class ScObject : MonoBehaviour
     protected void DeleteOnNewRound()
     {
         Destroy(gameObject);
+    }
+
+    protected void OutOfMap()
+    {
+        if (Mathf.Abs(myTrans.position.x) > 24 || Mathf.Abs(myTrans.position.y) > 17)
+        {
+            DeleteOnNewRound();
+        }
     }
 }
 
