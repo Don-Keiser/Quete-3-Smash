@@ -43,7 +43,7 @@ public class ScHeal : ScObject
 
     public void HealPlayer()
     {
-        scDamage.dammage -= 50;
+        //scDamage.dammage -= 50;
     }
 
     public override void Use(bool isUsing)
