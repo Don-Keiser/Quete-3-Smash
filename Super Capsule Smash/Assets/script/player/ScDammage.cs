@@ -108,6 +108,16 @@ public class ScDammage : MonoBehaviour
         myTrans.position = posOnKnockBack;
     }
 
+    public void Heal(int healValue)
+    {
+        dammage -= healValue;
+        if (dammage < 0)
+        {
+            dammage = 0;
+        }
+        UImanager.UpdateDammageValue(this, dammage);
+    }
+
     public void ApplyRecoil(Vector2 recoilDir, float recoilForce, float recoilDuration)
     {
         knockBackDir = (recoilDir.normalized * recoilForce)/2;

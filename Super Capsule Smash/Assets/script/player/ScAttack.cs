@@ -33,7 +33,7 @@ public class ScAttack : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         movementScript = GetComponent<ScPlayerMove>();
         dammageScript = GetComponent<ScDammage>();
-        UIManager.Instance.roundOver.AddListener(DropTheObject);
+        UIManager.Instance.roundOver.AddListener(ThrowObject);
         UIManager.Instance.roundOver.AddListener(StopChargingPunch);
         state = attackState.idle;
     }
@@ -155,7 +155,7 @@ public class ScAttack : MonoBehaviour
                     {
                         isHoldingSomething = true;
                         heldObject = collision.gameObject.GetComponent<ScObject>();
-                        heldObject.Grab(leftHand, dammageScript);
+                        heldObject.Grab(leftHand, dammageScript, this);
                         StopChargingPunch();
                     }
                 }
@@ -163,7 +163,7 @@ public class ScAttack : MonoBehaviour
         }
     }
 
-    public void DropTheObject()
+    public void ThrowObject()
     {
         if (isHoldingSomething)
         {
