@@ -12,6 +12,7 @@ public class ScGetInput : MonoBehaviour
     private Vector2 leftJoystickDir;
     private Vector2 rightJoystickDir;
     private bool canGetInput;
+    private bool isShieldUp;
 
     private void Start()
     {
@@ -30,7 +31,7 @@ public class ScGetInput : MonoBehaviour
             movementScript.LeftJoystick(ctxt.ReadValue<Vector2>());
         }
 
-        if (shieldscript != null && rightJoystickDir != Vector2.zero)
+        if (shieldscript != null && rightJoystickDir == Vector2.zero)
             shieldscript.SetshieldDirection(ctxt.ReadValue<Vector2>());
     }
     public void GetRightJoyStickValue(InputAction.CallbackContext ctxt)
@@ -41,7 +42,7 @@ public class ScGetInput : MonoBehaviour
             movementScript.RightJoystick(ctxt.ReadValue<Vector2>());
         }
 
-        if (shieldscript != null)
+        if (shieldscript != null && rightJoystickDir != Vector2.zero)
             shieldscript.SetshieldDirection(ctxt.ReadValue<Vector2>());
     }
 
@@ -62,7 +63,7 @@ public class ScGetInput : MonoBehaviour
 
     public void GetRighttrigger(InputAction.CallbackContext ctxt)
     {
-        if (attackScript != null && canGetInput)
+        if (attackScript != null && canGetInput && !isShieldUp)
         {
             if (ctxt.started)
             {
@@ -82,11 +83,13 @@ public class ScGetInput : MonoBehaviour
         {
             if (ctxt.started)
             {
+                isShieldUp = true;
                 shieldscript.SetShieldActiv(true);
             }
 
             if (ctxt.canceled)
             {
+                isShieldUp = false;
                 shieldscript.SetShieldActiv(false);
             }
         }
