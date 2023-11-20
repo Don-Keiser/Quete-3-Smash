@@ -8,16 +8,22 @@ using UnityEngine.Events;
 public class UIManager : MonoBehaviour
 {
     public static UIManager Instance;
-    [SerializeField] List<TMP_Text> playersScore = new List<TMP_Text>();
-    [SerializeField] List<TMP_Text> playersDammage = new List<TMP_Text>();
+    //[SerializeField] List<TMP_Text> playersScore = new List<TMP_Text>();
+    //[SerializeField] List<TMP_Text> playersDammage = new List<TMP_Text>();
     [SerializeField] Animator playerWonTextAnim = new Animator();
     [SerializeField] TMP_Text playerWonTxt;
     [SerializeField] TMP_Text joinText;
+    [SerializeField] Transform scoreHolder;
+    [SerializeField] Transform dammageHolder;
+    [SerializeField] GameObject dammageGO;
+    [SerializeField] GameObject scoreGO;
 
     private Dictionary<ScDammage, ScPlayerInfo> playersDic = new Dictionary<ScDammage, ScPlayerInfo>();
 
     public UnityEvent<int> newRound;
     public UnityEvent roundOver;
+    private PlayerInputManager playerInputManager;
+    private bool onFirstRound;
 
     private bool weGotAWinner; //this prevent the code to do anything if the last player decide to kill himself after winning
 
@@ -34,7 +40,9 @@ public class UIManager : MonoBehaviour
     }
     private void Start()
     {
+        playerInputManager = GetComponent<PlayerInputManager>();
         weGotAWinner = false;
+        onFirstRound = true;
         if (newRound == null)
             newRound = new UnityEvent<int>();
 
@@ -46,7 +54,10 @@ public class UIManager : MonoBehaviour
     {
         if (!playersDic.ContainsKey(playerInfo))
         {
-            playersDic.Add(playerInfo, new ScPlayerInfo(playersDic.Count + 1, 0, 0, playersScore[playersDic.Count], playersDammage[playersDic.Count], playerTrans.GetComponent<ScPlayerMove>().myColor));
+            var temposcore = Instantiate(scoreGO, scoreHolder);
+            var tempodammage = Instantiate(dammageGO, dammageHolder);
+            //playersDic.Add(playerInfo, new ScPlayerInfo(playersDic.Count + 1, 0, 0, playersScore[playersDic.Count], playersDammage[playersDic.Count], playerTrans.GetComponent<ScPlayerMove>().myColor));
+            playersDic.Add(playerInfo, new ScPlayerInfo(playersDic.Count + 1, 0, 0, temposcore.GetComponent<TMP_Text>(), tempodammage.GetComponent<TMP_Text>(), playerTrans.GetComponent<ScPlayerMove>().myColor));
             PlayerJoinTextUpdate();
         }
     }
@@ -103,6 +114,10 @@ public class UIManager : MonoBehaviour
             playersDic[player.Key].SetActive(true);
         }
         weGotAWinner = false;
+        if (onFirstRound)
+        {
+            playerInputManager.enabled = false;
+        }
     }
 
     private void ResetWinnerAnim()

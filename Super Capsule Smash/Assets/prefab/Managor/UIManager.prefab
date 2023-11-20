@@ -101,10 +101,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89c23a27887b6984f9479f0a9dc6c094, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player1ScoreText: {fileID: 0}
-  player2ScoreText: {fileID: 0}
-  player1DamageText: {fileID: 0}
-  player2DamageText: {fileID: 0}
-  playersDammage:
-  - {fileID: 0}
-  - {fileID: 0}
+  playerWonTextAnim: {fileID: 0}
+  playerWonTxt: {fileID: 0}
+  joinText: {fileID: 0}
+  scoreHolder: {fileID: 0}
+  dammageHolder: {fileID: 0}
+  dammageGO: {fileID: 2683480818912612113, guid: 6fc379324700cbe49b747e05a875f8c0, type: 3}
+  scoreGO: {fileID: 4367443832766322940, guid: f3e59f4ec7acfcd42aab01a1596366c2, type: 3}
+  newRound:
+    m_PersistentCalls:
+      m_Calls: []
+  roundOver:
+    m_PersistentCalls:
+      m_Calls: []
